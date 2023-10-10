@@ -1,0 +1,7 @@
+http://localhost:9090/finance/v1/bank/v4/bharat/create-account
+http://localhost:9090/finance/v1/bank/v4/bharat/update-account-details
+http://localhost:9090/finance/v1/bank/v4/bharat/get-account-details/302668029483/BOB9793
+http://localhost:9090/finance/v1/bank/v4/bharat/delete-account
+http://localhost:9090/finance/v1/bank/v4/bharat/credit-money
+http://localhost:9090/finance/v1/bank/v4/bharat/credit-money
+http://localhost:9090/finance/v1/bank/v4/bharat/debit-money
