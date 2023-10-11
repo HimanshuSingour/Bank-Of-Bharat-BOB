@@ -67,6 +67,7 @@ public class AccountServiceImpl implements AccountService {
             AccountDetailsGenarators accountDetailsGenarators = new AccountDetailsGenarators();
             String IFSC_CODE = accountDetailsGenarators.gereratedIFSC();
             String BANK_PIN = accountDetailsGenarators.generateBankCode();
+            String PASSWORD = accountDetailsGenarators.generatePin();
 
             AccountInformation accountInformation = AccountInformation.builder()
                     .accountId(userIdGenerated)
@@ -80,6 +81,7 @@ public class AccountServiceImpl implements AccountService {
                     .currentLocation(userRequest.getCurrentLocation())
                     .designation(userRequest.getDesignation())
                     .country(userRequest.getCountry())
+                    .password(PASSWORD)
                     .bankName(BANK_VI_NAME)
                     .bankBranch(BANK_VI_BRANCH)
                     .routingNumber(BANK_VI_ROUTING)
@@ -101,6 +103,8 @@ public class AccountServiceImpl implements AccountService {
         }
 
     }
+
+
 
 
     @Override
@@ -143,7 +147,9 @@ public class AccountServiceImpl implements AccountService {
 
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(
                 accountDetailsRequest.getAccountNumber(),
-                accountDetailsRequest.getContactEmail()
+                accountDetailsRequest.getContactEmail(),
+                accountDetailsRequest.getPassword()
+
         );
 
         if (accountInformation != null) {
@@ -156,9 +162,9 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public AccountDetailsResponse getYourAccountDetails(String accountNumber , String IFSCCode) {
+    public AccountDetailsResponse getYourAccountDetails(String accountNumber , String IFSCCode , String password) {
 
-        AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(accountNumber , IFSCCode);
+        AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(accountNumber , IFSCCode , password);
 
         AccountDetailsResponse accountDetailsResponse = new AccountDetailsResponse();
 
@@ -196,7 +202,7 @@ public class AccountServiceImpl implements AccountService {
     public CreditResponse creditYourMoney(CreditCredential creditCredential) {
 
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(creditCredential.getAccountNumber(),
-                creditCredential.getIfscCode());
+                creditCredential.getIfscCode() , creditCredential.getPassword());
 
         if(accountInformation != null){
 
@@ -243,7 +249,7 @@ public class AccountServiceImpl implements AccountService {
     public DebitedResponse debitYourMoney(DebitCredential debitCredential) {
 
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(debitCredential.getAccountNumber(),
-                debitCredential.getIfscCode());
+                debitCredential.getIfscCode() , debitCredential.getPassword());
 
         if(accountInformation != null){
 
@@ -296,7 +302,7 @@ public class AccountServiceImpl implements AccountService {
     public BalanceEnquiryResponse balanceEnquiry(BalanceEnquireyRequest balanceEnquireyRequest) {
 
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(balanceEnquireyRequest.getAccountNumber(),
-                balanceEnquireyRequest.getIfscCode());
+                balanceEnquireyRequest.getIfscCode() , balanceEnquireyRequest.getPassword());
 
         NotificationBalanceEnquiry notificationBalanceEnquiry = new NotificationBalanceEnquiry();
 

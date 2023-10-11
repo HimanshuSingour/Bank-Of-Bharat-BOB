@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class CreditCredential {
 
     private String accountNumber;
+    private  String password;
     private String bankPinCode;
     private String ifscCode;
     private String bankName;

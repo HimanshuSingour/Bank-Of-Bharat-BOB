@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class BalanceEnquireyRequest {
 
     private String accountNumber;
+    private String password;
     private String ifscCode;
 
 }

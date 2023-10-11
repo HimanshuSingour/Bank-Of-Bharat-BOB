@@ -17,7 +17,7 @@ public interface AccountService {
      UserResponse createAccount(UserRequest userRequest);
      AccountUpdateDetailsResponse updateAccountDetails(AccountUpdatingDetailsRequest accountUpdatingDetailsRequest) throws AccountNotFoundException;
      AccountDeletedSuccessResponse deleteAccount(AccountDeleteAccountDetailsRequest accountDeleteAccountDetailsRequest);
-     AccountDetailsResponse getYourAccountDetails(String accountNumber , String IFSCCode);
+     AccountDetailsResponse getYourAccountDetails(String accountNumber , String IFSCCode , String password);
      CreditResponse creditYourMoney(CreditCredential creditCredential);
      DebitedResponse debitYourMoney(DebitCredential debitCredential);
      BalanceEnquiryResponse balanceEnquiry(BalanceEnquireyRequest balanceEnquireyRequest);

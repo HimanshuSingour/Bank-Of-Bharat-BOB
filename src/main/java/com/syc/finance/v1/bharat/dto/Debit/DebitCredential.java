@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class DebitCredential {
 
     private String accountNumber;
+    private String password;
     private String ifscCode;
     private double debitYourMoney;
 }

@@ -19,6 +19,7 @@ public class MapperToResponse {
         userResponse.setAccountOpenDate(accountInformation.getAccountOpenDate());
         userResponse.setAccountBalance(accountInformation.getAccountBalance());
         userResponse.setRoutingNumber(accountInformation.getRoutingNumber());
+        userResponse.setPassword(accountInformation.getPassword());
         userResponse.setAccountType(accountInformation.getAccountType());
         userResponse.setContactEmail(accountInformation.getContactEmail());
         userResponse.setContactPhone(accountInformation.getContactPhone());

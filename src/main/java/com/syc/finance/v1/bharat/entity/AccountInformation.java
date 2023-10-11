@@ -35,6 +35,7 @@ public class AccountInformation {
     private String bankBranch;
     private String routingNumber;
     private String bankPinCode;
+    private String password;
     private String accountType;
     private double accountBalance;
     private String status;

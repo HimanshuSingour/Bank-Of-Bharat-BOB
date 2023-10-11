@@ -4,7 +4,6 @@ package com.syc.finance.v1.bharat.controller;
 import com.syc.finance.v1.bharat.Utils.AccountDeletedSuccessResponse;
 import com.syc.finance.v1.bharat.dto.*;
 import com.syc.finance.v1.bharat.dto.Accounts.*;
-import com.syc.finance.v1.bharat.dto.Accounts.Transaction.TransactionResponse;
 import com.syc.finance.v1.bharat.dto.BalanceEnquiry.BalanceEnquireyRequest;
 import com.syc.finance.v1.bharat.dto.BalanceEnquiry.BalanceEnquiryResponse;
 import com.syc.finance.v1.bharat.dto.Credit.CreditCredential;
@@ -19,13 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.AccountNotFoundException;
-import java.util.List;
 
 @RestController
 @RequestMapping("finance/v1/bank/v4/bharat")
 
 @CrossOrigin(origins = "http://localhost:4200/")
-public class UserController {
+public class AccountController {
 
     @Autowired
     private AccountService userService;
@@ -55,9 +53,12 @@ public class UserController {
         AccountDeletedSuccessResponse accountDeletedSuccessResponse = userService.deleteAccount(accountDetailsRequest);
         return new ResponseEntity<AccountDeletedSuccessResponse>(accountDeletedSuccessResponse , HttpStatus.ACCEPTED);
     }
-    @GetMapping("/get-account-details/{accountNumber}/{IFSCCode}")
-    ResponseEntity<AccountDetailsResponse> getAccountDetails(@PathVariable String accountNumber , @PathVariable String IFSCCode){
-        AccountDetailsResponse accountDetailsResponse = userService.getYourAccountDetails(accountNumber , IFSCCode);
+    @GetMapping("/get-account-details/{accountNumber}/{IFSCCode}/{password}")
+    ResponseEntity<AccountDetailsResponse> getAccountDetails(@PathVariable String accountNumber,
+                                                             @PathVariable String IFSCCode,
+                                                             @PathVariable String password){
+
+        AccountDetailsResponse accountDetailsResponse = userService.getYourAccountDetails(accountNumber , IFSCCode , password);
         return new ResponseEntity<AccountDetailsResponse>(accountDetailsResponse , HttpStatus.ACCEPTED);
     }
 
@@ -79,9 +80,5 @@ public class UserController {
         return new ResponseEntity<DebitedResponse>(response , HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/transaction-enquiry/{accountNumber}")
-    ResponseEntity<List<TransactionResponse>> transactionGive(@PathVariable String accountNumber){
-        List<TransactionResponse> response = transactionService.getAllTransaction(accountNumber);
-        return new ResponseEntity<List<TransactionResponse>>(response , HttpStatus.ACCEPTED);
-    }
+
 }

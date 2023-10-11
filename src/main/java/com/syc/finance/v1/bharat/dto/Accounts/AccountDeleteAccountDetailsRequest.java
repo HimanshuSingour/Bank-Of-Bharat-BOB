@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class AccountDeleteAccountDetailsRequest {
 
     private String accountHolderName;
+    private String password;
     private String accountNumber;
     private String contactEmail;
     private String contactPhone;
