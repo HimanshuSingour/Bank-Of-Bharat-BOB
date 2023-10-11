@@ -1,4 +1,4 @@
-package com.syc.finance.v1.bharat.dto;
+package com.syc.finance.v1.bharat.dto.Accounts;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

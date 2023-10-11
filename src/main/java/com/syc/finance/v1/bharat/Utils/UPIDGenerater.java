@@ -1,0 +1,36 @@
+package com.syc.finance.v1.bharat.Utils;
+
+import java.util.Random;
+
+public class UPIDGenerater {
+
+    public String generateUpiId(String fullName) {
+
+        if(fullName == null) return null;
+
+        String[] names = fullName.split(" ");
+
+        if (names.length == 2) {
+
+            String firstName = names[0];
+            String lastName = names[1];
+
+            if (firstName.isEmpty() || lastName.isEmpty()) {
+                return null;
+            }
+
+            String upiId = firstName + "@" + lastName + "okbob";
+            return upiId;
+        }
+
+        return null; // Add this line to handle cases where names.length is not 2
+    }
+
+    public String generatePin() {
+        Random random = new Random();
+        int min = 100000;
+        int max = 999999;
+        int upiCode = random.nextInt(max - min + 1) + min;
+        return String.format("%06d", upiCode); // Corrected the formatting
+    }
+}

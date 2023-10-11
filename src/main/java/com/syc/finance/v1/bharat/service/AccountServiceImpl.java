@@ -65,6 +65,7 @@ public class AccountServiceImpl implements AccountService {
         else{
 
             AccountDetailsGenarators accountDetailsGenarators = new AccountDetailsGenarators();
+
             String IFSC_CODE = accountDetailsGenarators.gereratedIFSC();
             String BANK_PIN = accountDetailsGenarators.generateBankCode();
             String PASSWORD = accountDetailsGenarators.generatePin();
@@ -75,6 +76,7 @@ public class AccountServiceImpl implements AccountService {
                     .contactEmail(userRequest.getContactEmail())
                     .contactPhone(userRequest.getContactPhone())
                     .gender(userRequest.getGender())
+                    .isHaveUpiId(BANK_V3_NOTA_UPI_ID)
                     .contactAddress(userRequest.getContactAddress())
                     .stateOfOrigin(userRequest.getStateOfOrigin())
                     .pinCodeNumber(userRequest.getPinCodeNumber())
@@ -101,10 +103,7 @@ public class AccountServiceImpl implements AccountService {
             return userRes;
 
         }
-
     }
-
-
 
 
     @Override

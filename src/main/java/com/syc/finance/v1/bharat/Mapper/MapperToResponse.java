@@ -10,6 +10,7 @@ public class MapperToResponse {
     public UserResponse userInformationToUserResponse(AccountInformation accountInformation) {
 
         UserResponse userResponse = new UserResponse();
+        userResponse.setIsHaveUpiId(accountInformation.getIsHaveUpiId());
         userResponse.setAccountId(accountInformation.getAccountId());
         userResponse.setAccountHolderName(accountInformation.getAccountHolderName());
         userResponse.setAccountNumber(accountInformation.getAccountNumber());

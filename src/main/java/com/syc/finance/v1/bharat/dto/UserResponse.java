@@ -20,6 +20,7 @@ public class UserResponse {
     private String bankBranch;
     private String IfscCode;
     private LocalDate accountOpenDate;
+    private String isHaveUpiId;
     private double accountBalance;
     private String routingNumber;
     private String password;

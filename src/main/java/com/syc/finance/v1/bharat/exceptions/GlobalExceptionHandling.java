@@ -13,19 +13,18 @@ import static com.syc.finance.v1.bharat.Utils.AccountDetailsForExceptionalHandle
 @RestControllerAdvice
 public class GlobalExceptionHandling {
 
-    @ExceptionHandler(Exception.class)
-    ResponseEntity<ErrorResponses> genaralException(Exception ex){
-        ErrorResponses errorResponses = new ErrorResponses();
-        errorResponses.setErrorMessage("SomeThing Went Wrong ! Try After Sometime");
-        errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
-    }
-
-
     @ExceptionHandler(EmailAlreadyExistStep.class)
     ResponseEntity<ErrorResponses> emailAlreadyExistException(EmailAlreadyExistStep ex){
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage("Account creation failed as the provided email address or phone number is already in use.");
+        errorResponses.setStatus(REJECTED);
+        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(UpiAlreadyExist.class)
+    ResponseEntity<ErrorResponses> upiAlreadyExist(UpiAlreadyExist ex){
+        ErrorResponses errorResponses = new ErrorResponses();
+        errorResponses.setErrorMessage("Your account number and IFSC code are already linked to a UPI ID");
         errorResponses.setStatus(REJECTED);
         return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
     }

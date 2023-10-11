@@ -30,13 +30,14 @@ public class AccountInformation {
     private String designation;
     private String country;
     private String accountNumber;
+    private String password;
     private String ifscCode;
     private String bankName;
     private String bankBranch;
     private String routingNumber;
     private String bankPinCode;
-    private String password;
     private String accountType;
+    private String isHaveUpiId;
     private double accountBalance;
     private String status;
     private LocalDateTime localDateTime;
