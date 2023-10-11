@@ -55,7 +55,7 @@ public class UPIAndBankingServiceImpl implements UPIAndBankingService {
                 response.setUPI_BALANCE(0.0);
                 response.setResponseMessage(BANK_V3_UPI_CREATED);
 
-//                upiDetailsRepositories.save(response); need to fix
+//                upiDetailsRepositories.save(response); need to fix yess
 
                 accountInfo.setIsHaveUpiId("YES");
                 accountDetailsRepositories.save(accountInfo);
