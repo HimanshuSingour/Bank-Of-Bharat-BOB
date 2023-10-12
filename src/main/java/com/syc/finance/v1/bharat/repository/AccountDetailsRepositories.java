@@ -23,5 +23,4 @@ public interface AccountDetailsRepositories extends JpaRepository<AccountInforma
 
 
 
-
 }

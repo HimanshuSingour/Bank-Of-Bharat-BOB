@@ -19,6 +19,7 @@ import com.syc.finance.v1.bharat.entity.AccountInformation;
 import com.syc.finance.v1.bharat.exceptions.exceptionSteps.AccountBalanceMinimumSteps;
 import com.syc.finance.v1.bharat.exceptions.exceptionSteps.AccountNotFoundStep;
 import com.syc.finance.v1.bharat.exceptions.exceptionSteps.EmailAlreadyExistStep;
+import com.syc.finance.v1.bharat.exceptions.exceptionSteps.PhoneNumberAlreadyExistStep;
 import com.syc.finance.v1.bharat.repository.TransactionHistoryRepository;
 import com.syc.finance.v1.bharat.repository.AccountDetailsRepositories;
 import com.twilio.Twilio;
@@ -59,8 +60,11 @@ public class AccountServiceImpl implements AccountService {
         Optional<AccountInformation> existingEmail = Optional.ofNullable(accountDetailsRepositories.findByContactEmail(userRequest.getContactEmail()));
         Optional<AccountInformation> existingPhone = Optional.ofNullable(accountDetailsRepositories.findByContactPhoneNumber(userRequest.getContactPhone()));
 
-        if (existingEmail.isPresent() || existingPhone.isPresent()) {
-            throw new EmailAlreadyExistStep("");
+        if (existingEmail.isPresent()) {
+            throw new EmailAlreadyExistStep("Email Already Exist. ");
+        }
+        else if (existingPhone.isPresent()){
+            throw new PhoneNumberAlreadyExistStep("Phone Number Already Exist. ");
         }
         else{
 
@@ -137,7 +141,7 @@ public class AccountServiceImpl implements AccountService {
         }
 
         else
-            throw new AccountNotFoundStep("");
+            throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
 
 
@@ -155,7 +159,7 @@ public class AccountServiceImpl implements AccountService {
             accountDetailsRepositories.delete(accountInformation);
             return new AccountDeletedSuccessResponse("Account deleted successfully.");
         } else {
-            throw new AccountNotFoundStep("Account not found.");
+            throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
         }
     }
 
@@ -193,7 +197,7 @@ public class AccountServiceImpl implements AccountService {
                 return accountDetailsResponse;
         }
         else{
-            throw new AccountNotFoundStep("");
+            throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
         }
     }
 
@@ -240,7 +244,7 @@ public class AccountServiceImpl implements AccountService {
             return addingMoney;
         }
 
-        else throw new AccountNotFoundStep("");
+        else throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
 
     }
 
@@ -290,10 +294,10 @@ public class AccountServiceImpl implements AccountService {
                 return miniMoney;
             }
             else {
-                throw new AccountBalanceMinimumSteps("");
+                throw new AccountBalanceMinimumSteps("Insufficient balance: Amount Less then the minimum money required to debit.");
             }
         }
-        else throw new AccountNotFoundStep("");
+        else throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
 
 

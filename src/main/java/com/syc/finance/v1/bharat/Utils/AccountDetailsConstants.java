@@ -17,7 +17,7 @@ public class AccountDetailsConstants {
     public static final String TWILIO_PHONE_NUMBER = "+12313594081";
     public static final String BANK_V2_CREDIT = "CREDIT";
     public static final String BANK_V2_DEBIT = "DEBIT";
-    public static final String BANK_V3_NOTA_UPI_ID = "NO";
+    public static final String BANK_V3_NOTA_UPI_ID = "This account does not have a UPI ID.";
     public static final String BANK_V3_UPI_CREATED = "Your UPI ID has been successfully created !!";
 
 

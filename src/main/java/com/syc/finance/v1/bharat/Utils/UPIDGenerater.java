@@ -19,7 +19,7 @@ public class UPIDGenerater {
                 return null;
             }
 
-            String upiId = firstName + "@" + lastName + "okbob";
+            String upiId = lastName + firstName + "@" + "okbob";
             return upiId;
         }
 

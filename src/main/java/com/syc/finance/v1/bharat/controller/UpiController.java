@@ -25,4 +25,5 @@ public class UpiController {
         UPIResponse response = upiAndBankingService.upiCreate(upiRequest);
         return new ResponseEntity<UPIResponse>(response , HttpStatus.ACCEPTED);
     }
+
 }

@@ -16,7 +16,31 @@ public class GlobalExceptionHandling {
     @ExceptionHandler(EmailAlreadyExistStep.class)
     ResponseEntity<ErrorResponses> emailAlreadyExistException(EmailAlreadyExistStep ex){
         ErrorResponses errorResponses = new ErrorResponses();
-        errorResponses.setErrorMessage("Account creation failed as the provided email address or phone number is already in use.");
+        errorResponses.setErrorMessage(ex.getMessage());
+        errorResponses.setStatus(REJECTED);
+        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(PhoneNumberAlreadyExistStep.class)
+    ResponseEntity<ErrorResponses> phoneAlreadyExistException(PhoneNumberAlreadyExistStep ex){
+        ErrorResponses errorResponses = new ErrorResponses();
+        errorResponses.setErrorMessage(ex.getMessage());
+        errorResponses.setStatus(REJECTED);
+        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(NetBankingIdAlreadyExist.class)
+    ResponseEntity<ErrorResponses> netBankingIdAlreadyExistException(NetBankingIdAlreadyExist ex){
+        ErrorResponses errorResponses = new ErrorResponses();
+        errorResponses.setErrorMessage(ex.getMessage());
+        errorResponses.setStatus(REJECTED);
+        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(NotHavingNetbanking.class)
+    ResponseEntity<ErrorResponses> netBankingAccountNotPresent(NotHavingNetbanking ex){
+        ErrorResponses errorResponses = new ErrorResponses();
+        errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
         return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
     }
@@ -24,7 +48,7 @@ public class GlobalExceptionHandling {
     @ExceptionHandler(UpiAlreadyExist.class)
     ResponseEntity<ErrorResponses> upiAlreadyExist(UpiAlreadyExist ex){
         ErrorResponses errorResponses = new ErrorResponses();
-        errorResponses.setErrorMessage("Your account number and IFSC code are already linked to a UPI ID");
+        errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
         return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
     }
@@ -32,15 +56,23 @@ public class GlobalExceptionHandling {
     @ExceptionHandler(ApiException.class)
     ResponseEntity<ApiException> apiExceptionHandling(ApiException ex){
         ErrorResponses errorResponses = new ErrorResponses();
-        errorResponses.setErrorMessage("Number is Not Verified");
+        errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
         return new ResponseEntity<ApiException>(HttpStatus.CREATED);
     }
 
     @ExceptionHandler(AccountBalanceMinimumSteps.class)
-    ResponseEntity<ErrorResponses> accountBalanceExcide(AccountBalanceMinimumSteps ex){
+    ResponseEntity<ErrorResponses> accountBalanceExist(AccountBalanceMinimumSteps ex){
         ErrorResponses errorResponses = new ErrorResponses();
-        errorResponses.setErrorMessage("Insufficient balance: Amount Less then the minimum money required to debit.");
+        errorResponses.setErrorMessage(ex.getMessage());
+        errorResponses.setStatus(REJECTED);
+        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(AccountNotFoundStep.class)
+    ResponseEntity<ErrorResponses> accountNotFound(AccountNotFoundStep ex){
+        ErrorResponses errorResponses = new ErrorResponses();
+        errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
         return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
     }
