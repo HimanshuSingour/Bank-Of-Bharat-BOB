@@ -11,10 +11,7 @@ import com.syc.finance.v1.bharat.dto.UPI.UPIResponse;
 import com.syc.finance.v1.bharat.entity.AccountInformation;
 import com.syc.finance.v1.bharat.entity.NetBankingInformation;
 import com.syc.finance.v1.bharat.entity.UpiInformation;
-import com.syc.finance.v1.bharat.exceptions.exceptionSteps.AccountNotFoundStep;
-import com.syc.finance.v1.bharat.exceptions.exceptionSteps.NetBankingIdAlreadyExist;
-import com.syc.finance.v1.bharat.exceptions.exceptionSteps.NotHavingNetbanking;
-import com.syc.finance.v1.bharat.exceptions.exceptionSteps.UpiAlreadyExist;
+import com.syc.finance.v1.bharat.exceptions.exceptionSteps.*;
 import com.syc.finance.v1.bharat.repository.AccountDetailsRepositories;
 import com.syc.finance.v1.bharat.repository.NetBankingRepositories;
 import com.syc.finance.v1.bharat.repository.UPIDetailsRepositories;
@@ -161,16 +158,20 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
         UpiInformation upiInformation = upiDetailsRepositories.findByAccountNumberAndPassword(upiRequest.getAccountNumber()
         , upiRequest.getBankPassword());
 
-        UPIResponse response = new UPIResponse();
-        response.setAccountNumber(upiInformation.getAccountNumber());
-        response.setContactNumber(upiInformation.getContactNumber());
-        response.setContactEmail(upiInformation.getContactEmail());
-        response.setUPI_GENERATED_ID(upiInformation.getUPI_GENERATED_ID());
-        response.setUPI_ID(upiInformation.getUPI_ID());
-        response.setUPI_CODE(upiInformation.getUPI_CODE());
-        response.setUPI_BALANCE(upiInformation.getUPI_BALANCE());
-        response.setResponseMessage(upiInformation.getResponseMessage());
-        return response;
+        if(upiInformation != null){
+
+            UPIResponse response = new UPIResponse();
+            response.setAccountNumber(upiInformation.getAccountNumber());
+            response.setContactNumber(upiInformation.getContactNumber());
+            response.setContactEmail(upiInformation.getContactEmail());
+            response.setUPI_GENERATED_ID(upiInformation.getUPI_GENERATED_ID());
+            response.setUPI_ID(upiInformation.getUPI_ID());
+            response.setUPI_CODE(upiInformation.getUPI_CODE());
+            response.setUPI_BALANCE(upiInformation.getUPI_BALANCE());
+            response.setResponseMessage(upiInformation.getResponseMessage());
+            return response;
+        }
+        throw new DetailsNotFountException("Details Not Found..");
     }
 
     @Override
@@ -179,14 +180,19 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
         NetBankingInformation netBankingInformation = netBankingRepositories.findByAccountIdAndIfscCode(netBankingRequest.getAccountNumber()
                 , netBankingRequest.getIfscCode());
 
-        NetBankingResponse response = new NetBankingResponse();
-        response.setNetId(netBankingInformation.getNetId());
-        response.setAccountHolderName(netBankingInformation.getAccountHolderName());
-        response.setAccountNumber(netBankingInformation.getAccountNumber());
-        response.setIfscCode(netBankingInformation.getIfscCode());
-        response.setLocalDateTime(netBankingInformation.getLocalDateTime());
-        response.setNet_BANKING_ID(netBankingInformation.getNet_BANKING_ID());
-        return response;
+        if(netBankingInformation != null){
+
+            NetBankingResponse response = new NetBankingResponse();
+            response.setNetId(netBankingInformation.getNetId());
+            response.setAccountHolderName(netBankingInformation.getAccountHolderName());
+            response.setAccountNumber(netBankingInformation.getAccountNumber());
+            response.setIfscCode(netBankingInformation.getIfscCode());
+            response.setLocalDateTime(netBankingInformation.getLocalDateTime());
+            response.setNet_BANKING_ID(netBankingInformation.getNet_BANKING_ID());
+            return response;
+        }
+
+        throw new DetailsNotFountException("Details Not Found..");
     }
 }
 

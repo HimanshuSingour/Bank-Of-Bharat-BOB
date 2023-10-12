@@ -29,6 +29,16 @@ public class GlobalExceptionHandling {
         return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(DetailsNotFountException.class)
+    ResponseEntity<ErrorResponses> detailsNotFoundException(DetailsNotFountException ex){
+        ErrorResponses errorResponses = new ErrorResponses();
+        errorResponses.setErrorMessage(ex.getMessage());
+        errorResponses.setStatus(REJECTED);
+        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+    }
+
+
+
     @ExceptionHandler(NetBankingIdAlreadyExist.class)
     ResponseEntity<ErrorResponses> netBankingIdAlreadyExistException(NetBankingIdAlreadyExist ex){
         ErrorResponses errorResponses = new ErrorResponses();
