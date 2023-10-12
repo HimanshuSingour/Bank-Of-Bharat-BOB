@@ -2,8 +2,10 @@ package com.syc.finance.v1.bharat.service.UpiAndNetBanking;
 
 import com.syc.finance.v1.bharat.Utils.InternetBankingIdGenerator;
 import com.syc.finance.v1.bharat.Utils.UPIDGenerater;
+import com.syc.finance.v1.bharat.dto.InternetBanking.GetNetBankingRequest;
 import com.syc.finance.v1.bharat.dto.InternetBanking.NetBankingRequest;
 import com.syc.finance.v1.bharat.dto.InternetBanking.NetBankingResponse;
+import com.syc.finance.v1.bharat.dto.UPI.GetUPIRequest;
 import com.syc.finance.v1.bharat.dto.UPI.UPIRequest;
 import com.syc.finance.v1.bharat.dto.UPI.UPIResponse;
 import com.syc.finance.v1.bharat.entity.AccountInformation;
@@ -28,7 +30,7 @@ import static com.syc.finance.v1.bharat.Utils.AccountDetailsConstants.BANK_V3_UP
 
 @Service
 @Slf4j
-public class UPIAndBankingServiceImpl implements UPIAndBankingService {
+public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
 
     @Autowired
     private UPIDetailsRepositories upiDetailsRepositories;
@@ -151,6 +153,40 @@ public class UPIAndBankingServiceImpl implements UPIAndBankingService {
         }
 
        throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
+    }
+
+    @Override
+    public UPIResponse getYourUpiInInfo(GetUPIRequest upiRequest) {
+
+        UpiInformation upiInformation = upiDetailsRepositories.findByAccountNumberAndPassword(upiRequest.getAccountNumber()
+        , upiRequest.getBankPassword());
+
+        UPIResponse response = new UPIResponse();
+        response.setAccountNumber(upiInformation.getAccountNumber());
+        response.setContactNumber(upiInformation.getContactNumber());
+        response.setContactEmail(upiInformation.getContactEmail());
+        response.setUPI_GENERATED_ID(upiInformation.getUPI_GENERATED_ID());
+        response.setUPI_ID(upiInformation.getUPI_ID());
+        response.setUPI_CODE(upiInformation.getUPI_CODE());
+        response.setUPI_BALANCE(upiInformation.getUPI_BALANCE());
+        response.setResponseMessage(upiInformation.getResponseMessage());
+        return response;
+    }
+
+    @Override
+    public NetBankingResponse getYourNetBankingInfo(GetNetBankingRequest netBankingRequest) {
+
+        NetBankingInformation netBankingInformation = netBankingRepositories.findByAccountIdAndIfscCode(netBankingRequest.getAccountNumber()
+                , netBankingRequest.getIfscCode());
+
+        NetBankingResponse response = new NetBankingResponse();
+        response.setNetId(netBankingInformation.getNetId());
+        response.setAccountHolderName(netBankingInformation.getAccountHolderName());
+        response.setAccountNumber(netBankingInformation.getAccountNumber());
+        response.setIfscCode(netBankingInformation.getIfscCode());
+        response.setLocalDateTime(netBankingInformation.getLocalDateTime());
+        response.setNet_BANKING_ID(netBankingInformation.getNet_BANKING_ID());
+        return response;
     }
 }
 
