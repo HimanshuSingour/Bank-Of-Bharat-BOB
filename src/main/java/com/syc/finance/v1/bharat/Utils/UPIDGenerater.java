@@ -23,7 +23,7 @@ public class UPIDGenerater {
             return upiId;
         }
 
-        return null; // Add this line to handle cases where names.length is not 2
+        return null;
     }
 
     public String generatePin() {

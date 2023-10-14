@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "TRANSACTION_HISTORY")
+@Builder
 public class TransactionDetailsHistory {
 
     @Id

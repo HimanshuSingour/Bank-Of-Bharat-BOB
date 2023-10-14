@@ -10,6 +10,8 @@ import com.syc.finance.v1.bharat.dto.Credit.CreditCredential;
 import com.syc.finance.v1.bharat.dto.Credit.CreditResponse;
 import com.syc.finance.v1.bharat.dto.Debit.DebitCredential;
 import com.syc.finance.v1.bharat.dto.Debit.DebitedResponse;
+import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiRequest;
+import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiResponse;
 import com.syc.finance.v1.bharat.service.AccountService;
 import com.syc.finance.v1.bharat.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +80,12 @@ public class AccountController {
     ResponseEntity<DebitedResponse> debitMoney(@RequestBody DebitCredential balanceEnquireyRequest){
         DebitedResponse response = userService.debitYourMoney(balanceEnquireyRequest);
         return new ResponseEntity<DebitedResponse>(response , HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/pay-upi-money")
+    ResponseEntity<PayUsingUpiResponse> payFromUpiId(@RequestBody PayUsingUpiRequest payUsingUpiRequest){
+        PayUsingUpiResponse response = userService.payUsingUpi(payUsingUpiRequest);
+        return new ResponseEntity<PayUsingUpiResponse>(response , HttpStatus.ACCEPTED);
     }
 
 

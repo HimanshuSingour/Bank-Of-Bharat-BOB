@@ -44,8 +44,6 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
         AccountInformation accountInfo = accountDetailsRepositories.findByAccountIdAndIfscCode(upiRequest.getAccountNumber(),
                 upiRequest.getIfscCode(), upiRequest.getPassword());
 
-        NetBankingInformation netBankingInformation = new NetBankingInformation();
-
         NetBankingInformation existingNetBanking = netBankingRepositories.findByAccountIdAndIfscCode(
                 upiRequest.getAccountNumber(),
                 upiRequest.getIfscCode());
@@ -71,7 +69,7 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
                     response.setContactNumber(accountInfo.getContactPhone());
                     response.setContactEmail(accountInfo.getContactEmail());
                     response.setUPI_GENERATED_ID(UPI_GENERATED_ID);
-                    response.setUPI_ID(UPI_ID);
+                    response.setUpiId(UPI_ID);
                     response.setUPI_CODE(UPI_CODE);
                     response.setUPI_BALANCE(0.0);
                     response.setResponseMessage(BANK_V3_UPI_CREATED);
@@ -165,7 +163,7 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
             response.setContactNumber(upiInformation.getContactNumber());
             response.setContactEmail(upiInformation.getContactEmail());
             response.setUPI_GENERATED_ID(upiInformation.getUPI_GENERATED_ID());
-            response.setUPI_ID(upiInformation.getUPI_ID());
+            response.setUpiId(upiInformation.getUPI_ID());
             response.setUPI_CODE(upiInformation.getUPI_CODE());
             response.setUPI_BALANCE(upiInformation.getUPI_BALANCE());
             response.setResponseMessage(upiInformation.getResponseMessage());

@@ -34,4 +34,15 @@ public class AccountDetailsResponse {
     private String status;
     private LocalDateTime localDateTime;
     private LocalDate accountOpenDate;
+
+    // adding NetBanking Info
+    private String password;
+    private String net_BANKING_ID;
+
+    //Upi Details
+    private String UPI_ID;
+    private double UPI_BALANCE;
+
+
+
 }

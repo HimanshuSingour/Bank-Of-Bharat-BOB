@@ -37,6 +37,14 @@ public class GlobalExceptionHandling {
         return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(UpiNotFoundException.class)
+    ResponseEntity<ErrorResponses> upInotFound(UpiNotFoundException ex){
+        ErrorResponses errorResponses = new ErrorResponses();
+        errorResponses.setErrorMessage(ex.getMessage());
+        errorResponses.setStatus(REJECTED);
+        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+    }
+
 
 
     @ExceptionHandler(NetBankingIdAlreadyExist.class)
