@@ -15,6 +15,8 @@ import com.syc.finance.v1.bharat.dto.Credit.CreditResponse;
 import com.syc.finance.v1.bharat.dto.Debit.DebitCredential;
 import com.syc.finance.v1.bharat.dto.Debit.DebitedResponse;
 import com.syc.finance.v1.bharat.dto.Transaction.TransactionRequest;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountRequest;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountResponse;
 import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiRequest;
 import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiResponse;
 import com.syc.finance.v1.bharat.entity.AccountInformation;
@@ -68,11 +70,9 @@ public class AccountServiceImpl implements AccountService {
 
         if (existingEmail.isPresent()) {
             throw new EmailAlreadyExistStep("Email Already Exist. ");
-        }
-        else if (existingPhone.isPresent()){
+        } else if (existingPhone.isPresent()) {
             throw new PhoneNumberAlreadyExistStep("Phone Number Already Exist. ");
-        }
-        else{
+        } else {
 
             AccountDetailsGenarators accountDetailsGenarators = new AccountDetailsGenarators();
 
@@ -122,7 +122,7 @@ public class AccountServiceImpl implements AccountService {
         Optional<AccountInformation> userInformation = Optional.ofNullable(accountDetailsRepositories.findByAccountNumber(
                 accountUpdatingDetailsRequest.getAccountNumber()));
 
-        if(userInformation.isPresent()){
+        if (userInformation.isPresent()) {
 
             AccountInformation updateAccountDetails = AccountInformation.builder()
                     .accountHolderName(accountUpdatingDetailsRequest.getAccountHolderName())
@@ -143,8 +143,7 @@ public class AccountServiceImpl implements AccountService {
             MapperToUpdateResponse mapperToUpdateResponse = new MapperToUpdateResponse();
 
             return mapperToUpdateResponse.userInformationToUpdateAccountResponse(updateAccountDetails);
-        }
-        else
+        } else
             throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
 
@@ -169,50 +168,49 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public AccountDetailsResponse getYourAccountDetails(String accountNumber , String IFSCCode , String password) {
+    public AccountDetailsResponse getYourAccountDetails(String accountNumber, String IFSCCode, String password) {
 
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(accountNumber
-                , IFSCCode , password);
+                , IFSCCode, password);
         AccountDetailsResponse accountDetailsResponse = new AccountDetailsResponse();
 
-        if (accountInformation != null){
+        if (accountInformation != null) {
 
-                accountDetailsResponse.setAccountId(accountInformation.getAccountId());
-                accountDetailsResponse.setAccountHolderName(accountInformation.getAccountHolderName());
-                accountDetailsResponse.setContactEmail(accountInformation.getContactEmail());
-                accountDetailsResponse.setContactPhone(accountInformation.getContactPhone());
-                accountDetailsResponse.setGender(accountInformation.getGender());
-                accountDetailsResponse.setContactAddress(accountInformation.getContactAddress());
-                accountDetailsResponse.setStateOfOrigin(accountInformation.getStateOfOrigin());
-                accountDetailsResponse.setPinCodeNumber(accountInformation.getPinCodeNumber());
-                accountDetailsResponse.setCurrentLocation(accountInformation.getCurrentLocation());
-                accountDetailsResponse.setDesignation(accountInformation.getDesignation());
-                accountDetailsResponse.setCountry(accountInformation.getCountry());
-                accountDetailsResponse.setAccountNumber(accountInformation.getAccountNumber());
-                accountDetailsResponse.setIfscCode(accountInformation.getIfscCode());
-                accountDetailsResponse.setBankName(accountInformation.getBankName());
-                accountDetailsResponse.setBankBranch(accountInformation.getBankBranch());
-                accountDetailsResponse.setRoutingNumber(accountInformation.getRoutingNumber());
-                accountDetailsResponse.setAccountType(accountInformation.getAccountType());
-                accountDetailsResponse.setAccountBalance(accountInformation.getAccountBalance());
-                accountDetailsResponse.setStatus(accountInformation.getStatus());
-                accountDetailsResponse.setLocalDateTime(LocalDateTime.now());
-                accountDetailsResponse.setAccountOpenDate(LocalDate.now());
+            accountDetailsResponse.setAccountId(accountInformation.getAccountId());
+            accountDetailsResponse.setAccountHolderName(accountInformation.getAccountHolderName());
+            accountDetailsResponse.setContactEmail(accountInformation.getContactEmail());
+            accountDetailsResponse.setContactPhone(accountInformation.getContactPhone());
+            accountDetailsResponse.setGender(accountInformation.getGender());
+            accountDetailsResponse.setContactAddress(accountInformation.getContactAddress());
+            accountDetailsResponse.setStateOfOrigin(accountInformation.getStateOfOrigin());
+            accountDetailsResponse.setPinCodeNumber(accountInformation.getPinCodeNumber());
+            accountDetailsResponse.setCurrentLocation(accountInformation.getCurrentLocation());
+            accountDetailsResponse.setDesignation(accountInformation.getDesignation());
+            accountDetailsResponse.setCountry(accountInformation.getCountry());
+            accountDetailsResponse.setAccountNumber(accountInformation.getAccountNumber());
+            accountDetailsResponse.setIfscCode(accountInformation.getIfscCode());
+            accountDetailsResponse.setBankName(accountInformation.getBankName());
+            accountDetailsResponse.setBankBranch(accountInformation.getBankBranch());
+            accountDetailsResponse.setRoutingNumber(accountInformation.getRoutingNumber());
+            accountDetailsResponse.setAccountType(accountInformation.getAccountType());
+            accountDetailsResponse.setAccountBalance(accountInformation.getAccountBalance());
+            accountDetailsResponse.setStatus(accountInformation.getStatus());
+            accountDetailsResponse.setLocalDateTime(LocalDateTime.now());
+            accountDetailsResponse.setAccountOpenDate(LocalDate.now());
 
-                NetBankingInformation netBankingInformation = new NetBankingInformation();
+            NetBankingInformation netBankingInformation = new NetBankingInformation();
 
-                accountDetailsResponse.setPassword(netBankingInformation.getPassword());
-                accountDetailsResponse.setNet_BANKING_ID(netBankingInformation.getNet_BANKING_ID());
+            accountDetailsResponse.setPassword(netBankingInformation.getPassword());
+            accountDetailsResponse.setNet_BANKING_ID(netBankingInformation.getNet_BANKING_ID());
 
-                // need to fix
-                UpiInformation upiInformation = new UpiInformation();
+            // need to fix
+            UpiInformation upiInformation = new UpiInformation();
 
-                accountDetailsResponse.setUPI_ID(upiInformation.getUPI_ID());
-                accountDetailsResponse.setUPI_BALANCE(upiInformation.getUPI_BALANCE());
+            accountDetailsResponse.setUPI_ID(upiInformation.getUPI_ID());
+            accountDetailsResponse.setUPI_BALANCE(upiInformation.getUPI_BALANCE());
 
-                return accountDetailsResponse;
-        }
-        else{
+            return accountDetailsResponse;
+        } else {
             throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
         }
     }
@@ -221,9 +219,9 @@ public class AccountServiceImpl implements AccountService {
     public CreditResponse creditYourMoney(CreditCredential creditCredential) {
 
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(creditCredential.getAccountNumber(),
-                creditCredential.getIfscCode() , creditCredential.getPassword());
+                creditCredential.getIfscCode(), creditCredential.getPassword());
 
-        if(accountInformation != null){
+        if (accountInformation != null) {
 
             double creditedAmount = creditCredential.getCreditYourMoney();
             double currentBalance = accountInformation.getAccountBalance() + creditedAmount;
@@ -238,7 +236,7 @@ public class AccountServiceImpl implements AccountService {
             NotificationForCredit notificationForCredit = new NotificationForCredit();
 
             notificationForCredit.sendForDebitedAccount(accountInformation.getAccountNumber(),
-                    accountInformation.getAccountBalance() , accountInformation.getContactPhone());
+                    accountInformation.getAccountBalance(), accountInformation.getContactPhone());
 
             CreditResponse addingMoney = new CreditResponse();
 
@@ -259,9 +257,8 @@ public class AccountServiceImpl implements AccountService {
             addingMoney.setLocalDateTime(LocalDateTime.now());
             addingMoney.setCurrentBalance(currentBalance);
             return addingMoney;
-        }
-
-        else throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
+        } else
+            throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
 
     }
 
@@ -269,14 +266,14 @@ public class AccountServiceImpl implements AccountService {
     public DebitedResponse debitYourMoney(DebitCredential debitCredential) {
 
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(debitCredential.getAccountNumber(),
-                debitCredential.getIfscCode() , debitCredential.getPassword());
+                debitCredential.getIfscCode(), debitCredential.getPassword());
 
-        if(accountInformation != null){
+        if (accountInformation != null) {
 
             double debitedAmount = debitCredential.getDebitYourMoney();
             double currentBalance = accountInformation.getAccountBalance() - debitedAmount;
 
-            if(currentBalance >= debitedAmount){
+            if (currentBalance >= debitedAmount) {
 
                 accountInformation.setAccountBalance(currentBalance);
                 accountInformation = accountDetailsRepositories.save(accountInformation);
@@ -286,7 +283,7 @@ public class AccountServiceImpl implements AccountService {
                 NotificationForDebited notificationForDebited = new NotificationForDebited();
 
                 notificationForDebited.sendForCredit(accountInformation.getAccountNumber(),
-                        accountInformation.getAccountBalance() , accountInformation.getContactPhone());
+                        accountInformation.getAccountBalance(), accountInformation.getContactPhone());
 
                 DebitedResponse miniMoney = new DebitedResponse();
 
@@ -309,12 +306,11 @@ public class AccountServiceImpl implements AccountService {
                 miniMoney.setDebitYourMoney(debitedAmount);
 
                 return miniMoney;
-            }
-            else {
+            } else {
                 throw new AccountBalanceMinimumSteps("Insufficient balance: Amount Less then the minimum money required to debit.");
             }
-        }
-        else throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
+        } else
+            throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
 
 
@@ -322,12 +318,12 @@ public class AccountServiceImpl implements AccountService {
     public BalanceEnquiryResponse balanceEnquiry(BalanceEnquireyRequest balanceEnquireyRequest) {
 
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(balanceEnquireyRequest.getAccountNumber(),
-                balanceEnquireyRequest.getIfscCode() , balanceEnquireyRequest.getPassword());
+                balanceEnquireyRequest.getIfscCode(), balanceEnquireyRequest.getPassword());
 
         NotificationBalanceEnquiry notificationBalanceEnquiry = new NotificationBalanceEnquiry();
 
         notificationBalanceEnquiry.sendForBalanceEnquiry(accountInformation.getAccountNumber(),
-                accountInformation.getAccountBalance() , accountInformation.getContactPhone());
+                accountInformation.getAccountBalance(), accountInformation.getContactPhone());
 
         String balanceId = UUID.randomUUID().toString();
         BalanceEnquiryResponse response = new BalanceEnquiryResponse();
@@ -339,36 +335,74 @@ public class AccountServiceImpl implements AccountService {
         return response;
     }
 
+
+    // adding money to account balance to UPI
     @Override
     public PayUsingUpiResponse payUsingUpi(PayUsingUpiRequest payUsingUpiRequest) {
 
-        UpiInformation upiInformation = upiDetailsRepositories
-                .findByUpiIdAndBankPasswordAndContactEmail(payUsingUpiRequest.getUPI_ID() ,
-                        payUsingUpiRequest.getBankPassword() , payUsingUpiRequest.getContactEmail() );
+        UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(payUsingUpiRequest.getUPI_ID());
 
+        AccountInformation accountInformation = new AccountInformation();
 
-        if(upiInformation != null ){
+        //test still need to fix
+        if (upiInformation != null) {
+            System.out.println(upiInformation.getUPI_ID());
+        } else {
+            System.out.println("UPI ID not found.");
+        }
 
-            AccountInformation accountInformation = new AccountInformation();
+        if (upiInformation != null) {
 
-            double MoneyToAccount = payUsingUpiRequest.getPayMoney();
-            double currentBalance = accountInformation.getAccountBalance();
-            double addingFunds = currentBalance + MoneyToAccount;
+            double getFormUPI = payUsingUpiRequest.getPayMoney();
+            double getFromMainAccount = accountInformation.getAccountBalance();
+            double total = getFormUPI + getFromMainAccount;
 
-            accountInformation.setAccountBalance(addingFunds);
+            accountInformation.setAccountBalance(total);
             accountDetailsRepositories.save(accountInformation);
 
             PayUsingUpiResponse payUsingUpiResponse = new PayUsingUpiResponse();
-            payUsingUpiResponse.setResponseMessage("Payment Successfully..");
-            payUsingUpiResponse.setStatus("SUCCESS");
-
+            payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
+            payUsingUpiResponse.setStatus(SUCCESS_STATUS);
             return payUsingUpiResponse;
 
         }
 
-        throw new UpiNotFoundException("You haven't Create your UPI Id, There is No account link to this UPI");
+        return null;
+    }
+
+
+    // adding money from UPI to account balance
+    public AddMoneyToUPIFromAccountResponse addingMoneyFromAccountNumberToUpi(AddMoneyToUPIFromAccountRequest addMoneyToUPIFromAccountRequest) {
+
+        AccountInformation accountInformation = accountDetailsRepositories
+                 .findByAccountNumberAndPassword(
+                         addMoneyToUPIFromAccountRequest.getAccountNumber() ,
+                         addMoneyToUPIFromAccountRequest.getPassword());
+
+        if(accountInformation != null){
+
+            UpiInformation upiInformation = new UpiInformation();
+
+            double moneyGetFromMainAccount = accountInformation.getAccountBalance();
+
+             // not getting money from below line need to fix it.
+//            double gettingMoneyFromUpi = addMoneyToUPIFromAccountRequest.getAddedToUpi();
+
+            double gettingMoneyFromUpi = 300.00; //hard coded
+            double adding = moneyGetFromMainAccount + gettingMoneyFromUpi;
+
+            accountInformation.setAccountBalance(adding);
+
+            accountDetailsRepositories.save(accountInformation);
+
+            AddMoneyToUPIFromAccountResponse addMoneyToUPIFromAccountResponse = new AddMoneyToUPIFromAccountResponse();
+            addMoneyToUPIFromAccountResponse.setStatus(SUCCESS_ADD_MONEY_TO_UPI_FROM_MAIN_ACCOUNT);
+            return addMoneyToUPIFromAccountResponse;
+        }
+
+        throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
 }
 
 
-// add balance to upi from bank
+

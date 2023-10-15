@@ -21,6 +21,9 @@ public interface AccountDetailsRepositories extends JpaRepository<AccountInforma
     @Query("SELECT u FROM AccountInformation u WHERE u.accountNumber = :accountNumber AND u.ifscCode = :ifscCode AND u.password = :password")
     AccountInformation findByAccountIdAndIfscCode(String accountNumber, String ifscCode , String password);
 
+    @Query("SELECT u FROM AccountInformation u WHERE u.accountNumber = :accountNumber AND u.password = :password")
+    AccountInformation findByAccountNumberAndPassword(String accountNumber , String password);
+
 
 
 }

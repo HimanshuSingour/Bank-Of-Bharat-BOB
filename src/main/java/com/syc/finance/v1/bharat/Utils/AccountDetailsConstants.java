@@ -20,6 +20,12 @@ public class AccountDetailsConstants {
     public static final String BANK_V3_NOTA_UPI_ID = "This account does not have a UPI ID.";
     public static final String BANK_V3_UPI_CREATED = "Your UPI ID has been successfully created !!";
 
+    public static final String SUCCESS_PAY_MONEY_FROM_UPI = "Payment Successfully !!";
+
+    public static final String SUCCESS_STATUS = "SUCCESS !!";
+
+    public static final String SUCCESS_ADD_MONEY_TO_UPI_FROM_MAIN_ACCOUNT = "Your Money Hass been added to your upi account successfully !!";
+
 
 
 }

@@ -1,6 +1,5 @@
 package com.syc.finance.v1.bharat.dto.UPIPay;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PayUsingUpiRequest {
+public class AddMoneyToUPIFromAccountResponse {
 
-    private String UPI_ID;
-    private double payMoney;
+    private String status;
 }

@@ -10,6 +10,9 @@ import com.syc.finance.v1.bharat.dto.Credit.CreditCredential;
 import com.syc.finance.v1.bharat.dto.Credit.CreditResponse;
 import com.syc.finance.v1.bharat.dto.Debit.DebitCredential;
 import com.syc.finance.v1.bharat.dto.Debit.DebitedResponse;
+import com.syc.finance.v1.bharat.dto.UPI.UPIResponse;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountRequest;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountResponse;
 import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiRequest;
 import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiResponse;
 import com.syc.finance.v1.bharat.service.AccountService;
@@ -82,10 +85,18 @@ public class AccountController {
         return new ResponseEntity<DebitedResponse>(response , HttpStatus.ACCEPTED);
     }
 
+    // upi
+
     @PostMapping("/pay-upi-money")
     ResponseEntity<PayUsingUpiResponse> payFromUpiId(@RequestBody PayUsingUpiRequest payUsingUpiRequest){
         PayUsingUpiResponse response = userService.payUsingUpi(payUsingUpiRequest);
         return new ResponseEntity<PayUsingUpiResponse>(response , HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/add-upi-money")
+    ResponseEntity<AddMoneyToUPIFromAccountResponse> payTo(@RequestBody AddMoneyToUPIFromAccountRequest addMoneyToUPIFromAccountRequest){
+        AddMoneyToUPIFromAccountResponse response = userService.addingMoneyFromAccountNumberToUpi(addMoneyToUPIFromAccountRequest);
+        return new ResponseEntity<AddMoneyToUPIFromAccountResponse>(response , HttpStatus.ACCEPTED);
     }
 
 

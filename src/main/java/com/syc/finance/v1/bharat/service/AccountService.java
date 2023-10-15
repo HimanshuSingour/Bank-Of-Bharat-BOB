@@ -9,6 +9,8 @@ import com.syc.finance.v1.bharat.dto.Credit.CreditCredential;
 import com.syc.finance.v1.bharat.dto.Credit.CreditResponse;
 import com.syc.finance.v1.bharat.dto.Debit.DebitCredential;
 import com.syc.finance.v1.bharat.dto.Debit.DebitedResponse;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountRequest;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountResponse;
 import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiRequest;
 import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiResponse;
 
@@ -24,5 +26,6 @@ public interface AccountService {
      DebitedResponse debitYourMoney(DebitCredential debitCredential);
      BalanceEnquiryResponse balanceEnquiry(BalanceEnquireyRequest balanceEnquireyRequest);
      PayUsingUpiResponse payUsingUpi(PayUsingUpiRequest payUsingUpiRequest);
+     AddMoneyToUPIFromAccountResponse addingMoneyFromAccountNumberToUpi(AddMoneyToUPIFromAccountRequest addMoneyToUPIFromAccountRequest);
 
 }

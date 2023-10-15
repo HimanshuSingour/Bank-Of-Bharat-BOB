@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PayUsingUpiRequest {
+public class AddMoneyToUPIFromAccountRequest {
 
-    private String UPI_ID;
-    private double payMoney;
+    private double addedToUpi;
+    private String accountNumber;
+    private String password;
 }

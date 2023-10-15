@@ -13,8 +13,8 @@ public interface UPIDetailsRepositories extends JpaRepository<UpiInformation, St
     @Query("SELECT u FROM UpiInformation u WHERE u.accountNumber = :accountNumber AND u.bankPassword = :bankPassword")
     UpiInformation findByAccountNumberAndPassword(@Param("accountNumber") String accountNumber, @Param("bankPassword") String bankPassword);
 
+    @Query("SELECT u FROM UpiInformation u WHERE u.UPI_ID = :upiId")
+    UpiInformation findByUpiId(@Param("upiId") String upiId);
 
-    @Query("SELECT u FROM UpiInformation u WHERE u.UPI_ID = :UPI_ID AND u.bankPassword = :bankPassword AND u.contactEmail = :contactEmail")
-    UpiInformation findByUpiIdAndBankPasswordAndContactEmail(@Param("UPI_ID") String UPI_ID, @Param("bankPassword") String bankPassword, @Param("contactEmail") String contactEmail);
 
 }

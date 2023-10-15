@@ -4,6 +4,8 @@ package com.syc.finance.v1.bharat.controller;
 import com.syc.finance.v1.bharat.dto.UPI.GetUPIRequest;
 import com.syc.finance.v1.bharat.dto.UPI.UPIRequest;
 import com.syc.finance.v1.bharat.dto.UPI.UPIResponse;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountRequest;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountResponse;
 import com.syc.finance.v1.bharat.service.UpiAndNetBanking.UPIAndNetBankingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +26,9 @@ public class UpiController {
     }
 
     @GetMapping("/get-upi-details")
-    ResponseEntity<UPIResponse> getUpiDetails(@RequestBody GetUPIRequest upiRequest){
+    ResponseEntity<UPIResponse> getUpiDetails(@RequestBody GetUPIRequest upiRequest) {
         UPIResponse response = upiAndNetBankingService.getYourUpiInInfo(upiRequest);
-        return new ResponseEntity<UPIResponse>(response , HttpStatus.ACCEPTED);
+        return new ResponseEntity<UPIResponse>(response, HttpStatus.ACCEPTED);
     }
-
 
 }
