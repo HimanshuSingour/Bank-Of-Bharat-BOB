@@ -341,14 +341,15 @@ public class AccountServiceImpl implements AccountService {
     public AddMoneyFromAccountToUPIResponse payUsingUpi(AddMoneyFromAccountToUPIRequest addMoneyFromAccountToUPIRequest) {
 
         UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(addMoneyFromAccountToUPIRequest.getUpiId());
-        AccountInformation accountInformation = new AccountInformation();
+
+        AccountInformation accountInformation = accountDetailsRepositories
+                .findByAccountNumber(addMoneyFromAccountToUPIRequest.getAccountNumber());
 
         if (upiInformation != null) {
 
             double getFormUPI = addMoneyFromAccountToUPIRequest.getPayMoney();
             double fromMainAccount = accountInformation.getAccountBalance();
-
-            double leftMoneyForMainAccount = getFormUPI - fromMainAccount;
+            double leftMoneyForMainAccount = fromMainAccount - getFormUPI;
 
             accountInformation.setAccountBalance(leftMoneyForMainAccount);
             accountDetailsRepositories.save(accountInformation);

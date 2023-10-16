@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 public class AddMoneyFromAccountToUPIRequest {
 
     private String upiId;
+    private String accountNumber;
     private double payMoney;
 }
