@@ -31,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.naming.InsufficientResourcesException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -340,31 +341,37 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AddMoneyFromAccountToUPIResponse payUsingUpi(AddMoneyFromAccountToUPIRequest addMoneyFromAccountToUPIRequest) {
 
-        UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(addMoneyFromAccountToUPIRequest.getUpiId());
-
         AccountInformation accountInformation = accountDetailsRepositories
                 .findByAccountNumber(addMoneyFromAccountToUPIRequest.getAccountNumber());
 
-        if (upiInformation != null) {
+        UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(addMoneyFromAccountToUPIRequest.getUpiId());
 
-            double getFormUPI = addMoneyFromAccountToUPIRequest.getPayMoney();
-            double fromMainAccount = accountInformation.getAccountBalance();
-            double leftMoneyForMainAccount = fromMainAccount - getFormUPI;
+        if (upiInformation != null && accountInformation != null) {
+            if(accountInformation.getAccountBalance() > addMoneyFromAccountToUPIRequest.getPayMoney()){
 
-            accountInformation.setAccountBalance(leftMoneyForMainAccount);
-            accountDetailsRepositories.save(accountInformation);
+                double getFormUPI = addMoneyFromAccountToUPIRequest.getPayMoney();
+                double fromMainAccount = accountInformation.getAccountBalance();
+                double leftMoneyForMainAccount = fromMainAccount - getFormUPI;
 
-            upiInformation.setUPI_BALANCE(getFormUPI);
-            upiDetailsRepositories.save(upiInformation);
+                accountInformation.setAccountBalance(leftMoneyForMainAccount);
+                accountDetailsRepositories.save(accountInformation);
+
+                upiInformation.setUPI_BALANCE(getFormUPI);
+                upiDetailsRepositories.save(upiInformation);
 
 
-            AddMoneyFromAccountToUPIResponse payUsingUpiResponse = new AddMoneyFromAccountToUPIResponse();
-            payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
-            payUsingUpiResponse.setStatus(SUCCESS_STATUS);
-            return payUsingUpiResponse;
+                AddMoneyFromAccountToUPIResponse payUsingUpiResponse = new AddMoneyFromAccountToUPIResponse();
+                payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
+                payUsingUpiResponse.setStatus(SUCCESS_STATUS);
+                return payUsingUpiResponse;
+            }
+            else{
+
+                throw new InSufficientBalance("Insufficient Balance..");
+            }
         }
 
-        return null;
+       throw new DetailsNotFountException("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
 
 

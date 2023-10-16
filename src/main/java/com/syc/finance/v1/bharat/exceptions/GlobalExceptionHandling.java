@@ -63,6 +63,15 @@ public class GlobalExceptionHandling {
         return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(InSufficientBalance.class)
+    ResponseEntity<ErrorResponses> inSufficientFunds(InSufficientBalance ex){
+        ErrorResponses errorResponses = new ErrorResponses();
+        errorResponses.setErrorMessage(ex.getMessage());
+        errorResponses.setStatus(REJECTED);
+        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+    }
+
+
     @ExceptionHandler(UpiAlreadyExist.class)
     ResponseEntity<ErrorResponses> upiAlreadyExist(UpiAlreadyExist ex){
         ErrorResponses errorResponses = new ErrorResponses();
