@@ -359,7 +359,6 @@ public class AccountServiceImpl implements AccountService {
                 upiInformation.setUPI_BALANCE(getFormUPI);
                 upiDetailsRepositories.save(upiInformation);
 
-
                 AddMoneyFromAccountToUPIResponse payUsingUpiResponse = new AddMoneyFromAccountToUPIResponse();
                 payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
                 payUsingUpiResponse.setStatus(SUCCESS_STATUS);
@@ -370,7 +369,6 @@ public class AccountServiceImpl implements AccountService {
                 throw new InSufficientBalance("Insufficient Balance..");
             }
         }
-
        throw new DetailsNotFountException("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
 

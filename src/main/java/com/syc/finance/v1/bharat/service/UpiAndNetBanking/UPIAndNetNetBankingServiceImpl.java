@@ -5,6 +5,8 @@ import com.syc.finance.v1.bharat.Utils.UPIDGenerater;
 import com.syc.finance.v1.bharat.dto.InternetBanking.GetNetBankingRequest;
 import com.syc.finance.v1.bharat.dto.InternetBanking.NetBankingRequest;
 import com.syc.finance.v1.bharat.dto.InternetBanking.NetBankingResponse;
+import com.syc.finance.v1.bharat.dto.TransferMoney.TransferMoneyRequest;
+import com.syc.finance.v1.bharat.dto.TransferMoney.TransferMoneyResponse;
 import com.syc.finance.v1.bharat.dto.UPI.GetUPIRequest;
 import com.syc.finance.v1.bharat.dto.UPI.UPIRequest;
 import com.syc.finance.v1.bharat.dto.UPI.UPIResponse;
@@ -22,8 +24,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static com.syc.finance.v1.bharat.Utils.AccountDetailsConstants.BANK_V3_NOTA_UPI_ID;
-import static com.syc.finance.v1.bharat.Utils.AccountDetailsConstants.BANK_V3_UPI_CREATED;
+import static com.syc.finance.v1.bharat.Utils.AccountDetailsConstants.*;
 
 @Service
 @Slf4j
@@ -188,6 +189,48 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
         }
 
         throw new DetailsNotFountException("Details Not Found..");
+    }
+
+    // Development Stage
+
+    @Override
+    public TransferMoneyResponse moneyTransferAccountToAccount(TransferMoneyRequest transferMoneyRequest) {
+
+        AccountInformation accountInformationForRecipient = accountDetailsRepositories.findByAccountNumberAndName(
+                transferMoneyRequest.getFullNameOfRecipient(),
+                transferMoneyRequest.getAccountNumberOfRecipient());
+
+        AccountInformation accountInformationForSender = accountDetailsRepositories.findByAccountNumber(
+                transferMoneyRequest.getAccountNumberOfSender());
+
+
+        if(accountInformationForRecipient != null && accountInformationForSender != null){
+
+            //senders money
+            double sendersMoney = transferMoneyRequest.getTransferAmount();
+            double sendersBankAccount = accountInformationForSender.getAccountBalance() - sendersMoney;
+
+            accountInformationForSender.setAccountBalance(sendersBankAccount);
+            accountDetailsRepositories.save(accountInformationForSender);
+
+            //recipients money
+            double recipientMoney = accountInformationForRecipient.getAccountBalance();
+            double recvdBankAccount = sendersMoney + recipientMoney;
+
+            accountInformationForRecipient.setAccountBalance(recvdBankAccount);
+            accountDetailsRepositories.save(accountInformationForRecipient);
+
+            //response
+            TransferMoneyResponse transferMoneyResponse = new TransferMoneyResponse();
+            transferMoneyResponse.setResponseMessage(MONEY_SEND_SUCCESSFULLY);
+            return transferMoneyResponse;
+        }
+
+        else {
+
+            throw new DetailsNotFountException("");
+        }
+
     }
 }
 

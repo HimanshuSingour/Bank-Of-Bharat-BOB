@@ -26,6 +26,7 @@ public class AccountDetailsConstants {
 
     public static final String SUCCESS_ADD_MONEY_TO_UPI_FROM_MAIN_ACCOUNT = "Your Money Hass been added to your upi account successfully !!";
 
+    public static final String MONEY_SEND_SUCCESSFULLY = "Money Has Been Send Successfully, Thank Your For Using Bank Of Bharat !!";
 
 
 }
