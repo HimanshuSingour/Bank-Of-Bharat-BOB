@@ -107,7 +107,6 @@ public class AccountServiceImpl implements AccountService {
                     .bankPinCode(BANK_PIN)
                     .build();
 
-
             accountDetailsRepositories.save(accountInformation);
 
             UserResponse userRes = mapperToResponse.userInformationToUserResponse(accountInformation);
@@ -141,11 +140,6 @@ public class AccountServiceImpl implements AccountService {
                     .localDateTime(LocalDateTime.now())
                     .build();
 
-            NotificationBalanceEnquiry notificationBalanceEnquiry = new NotificationBalanceEnquiry();
-
-            notificationBalanceEnquiry.sendForBalanceEnquiry(updateAccountDetails.getAccountNumber(),
-                    updateAccountDetails.getAccountBalance(), updateAccountDetails.getContactPhone());
-
 
             MapperToUpdateResponse mapperToUpdateResponse = new MapperToUpdateResponse();
 
@@ -167,18 +161,6 @@ public class AccountServiceImpl implements AccountService {
 
         if (accountInformation != null) {
             accountDetailsRepositories.delete(accountInformation);
-
-            try{
-
-                NotificationBalanceEnquiry notificationBalanceEnquiry = new NotificationBalanceEnquiry();
-
-                notificationBalanceEnquiry.sendForBalanceEnquiry(accountInformation.getAccountNumber(),
-                        accountInformation.getAccountBalance(), accountInformation.getContactPhone());
-
-            }catch (Exception e){
-                System.out.println(e);
-            }
-
             return new AccountDeletedSuccessResponse("Account deleted successfully.");
         } else {
             throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
@@ -377,12 +359,6 @@ public class AccountServiceImpl implements AccountService {
                 upiInformation.setUPI_BALANCE(getFormUPI);
                 upiDetailsRepositories.save(upiInformation);
 
-                NotificationBalanceEnquiry notificationBalanceEnquiry = new NotificationBalanceEnquiry();
-
-                notificationBalanceEnquiry.sendForBalanceEnquiry(accountInformation.getAccountNumber(),
-                        accountInformation.getAccountBalance(), accountInformation.getContactPhone());
-
-
                 AddMoneyFromAccountToUPIResponse payUsingUpiResponse = new AddMoneyFromAccountToUPIResponse();
                 payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
                 payUsingUpiResponse.setStatus(SUCCESS_STATUS);
@@ -419,11 +395,6 @@ public class AccountServiceImpl implements AccountService {
                 accountInformation.setAccountBalance(adding);
 
                 accountDetailsRepositories.save(accountInformation);
-
-                NotificationBalanceEnquiry notificationBalanceEnquiry = new NotificationBalanceEnquiry();
-
-                notificationBalanceEnquiry.sendForBalanceEnquiry(accountInformation.getAccountNumber(),
-                        accountInformation.getAccountBalance(), accountInformation.getContactPhone());
 
                 AddMoneyToUPIFromAccountResponse addMoneyToUPIFromAccountResponse = new AddMoneyToUPIFromAccountResponse();
                 addMoneyToUPIFromAccountResponse.setStatus(SUCCESS_ADD_MONEY_TO_UPI_FROM_MAIN_ACCOUNT);
