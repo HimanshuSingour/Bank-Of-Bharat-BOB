@@ -10,19 +10,17 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Builder
-@ToString
 @Table(name = "UPI_INFO")
 public class UpiInformation {
 
     @Id
     private String globalId;
     private String accountNumber;
+    private String upiId;
     private String ifscCode;
     private String bankPassword;
     private String contactNumber;
     private String contactEmail;
-    private String UPI_GENERATED_ID;
-    private String UPI_ID;
     private String UPI_CODE;
     private double UPI_BALANCE;
     private String responseMessage;

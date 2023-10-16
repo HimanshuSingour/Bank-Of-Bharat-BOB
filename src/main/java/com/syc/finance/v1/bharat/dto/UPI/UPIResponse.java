@@ -12,7 +12,6 @@ public class UPIResponse {
     private String accountNumber;  // The bank account number linked to the UPI ID
     private String contactNumber;  // The phone number associated with the UPI account
     private String contactEmail;
-    private String UPI_GENERATED_ID;
     private String upiId;  // The UPI ID of the user
     private String UPI_CODE;// The email address associated with the UPI account
     private double UPI_BALANCE;  // The current balance in the UPI account

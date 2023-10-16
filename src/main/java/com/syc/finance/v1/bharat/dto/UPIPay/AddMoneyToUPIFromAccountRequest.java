@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddMoneyToUPIFromAccountRequest {
 
-    private double addedToUpi;
+    private double addedFromUpi;
     private String accountNumber;
     private String password;
+    private String upiId;
 }

@@ -206,7 +206,7 @@ public class AccountServiceImpl implements AccountService {
             // need to fix
             UpiInformation upiInformation = new UpiInformation();
 
-            accountDetailsResponse.setUPI_ID(upiInformation.getUPI_ID());
+            accountDetailsResponse.setUPI_ID(upiInformation.getUpiId());
             accountDetailsResponse.setUPI_BALANCE(upiInformation.getUPI_BALANCE());
 
             return accountDetailsResponse;
@@ -340,13 +340,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public PayUsingUpiResponse payUsingUpi(PayUsingUpiRequest payUsingUpiRequest) {
 
-        UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(payUsingUpiRequest.getUPI_ID());
+        UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(payUsingUpiRequest.getUpiId());
 
         AccountInformation accountInformation = new AccountInformation();
 
         //test still need to fix
         if (upiInformation != null) {
-            System.out.println(upiInformation.getUPI_ID());
+            System.out.println(upiInformation.getUpiId());
         } else {
             System.out.println("UPI ID not found.");
         }
@@ -364,14 +364,12 @@ public class AccountServiceImpl implements AccountService {
             payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
             payUsingUpiResponse.setStatus(SUCCESS_STATUS);
             return payUsingUpiResponse;
-
         }
-
         return null;
     }
 
 
-    // adding money from UPI to account balance
+
     public AddMoneyToUPIFromAccountResponse addingMoneyFromAccountNumberToUpi(AddMoneyToUPIFromAccountRequest addMoneyToUPIFromAccountRequest) {
 
         AccountInformation accountInformation = accountDetailsRepositories
@@ -379,25 +377,29 @@ public class AccountServiceImpl implements AccountService {
                          addMoneyToUPIFromAccountRequest.getAccountNumber() ,
                          addMoneyToUPIFromAccountRequest.getPassword());
 
-        if(accountInformation != null){
+        UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(addMoneyToUPIFromAccountRequest.getUpiId());
 
-            UpiInformation upiInformation = new UpiInformation();
+        try {
 
-            double moneyGetFromMainAccount = accountInformation.getAccountBalance();
+            if (accountInformation != null && upiInformation != null) {
 
-             // not getting money from below line need to fix it.
-//            double gettingMoneyFromUpi = addMoneyToUPIFromAccountRequest.getAddedToUpi();
+                double moneyGetFromMainAccount = accountInformation.getAccountBalance();
 
-            double gettingMoneyFromUpi = 300.00; //hard coded
-            double adding = moneyGetFromMainAccount + gettingMoneyFromUpi;
+                double gettingMoneyFromUpi = addMoneyToUPIFromAccountRequest.getAddedFromUpi();
+                double adding = moneyGetFromMainAccount + gettingMoneyFromUpi;
 
-            accountInformation.setAccountBalance(adding);
+                accountInformation.setAccountBalance(adding);
 
-            accountDetailsRepositories.save(accountInformation);
+                accountDetailsRepositories.save(accountInformation);
 
-            AddMoneyToUPIFromAccountResponse addMoneyToUPIFromAccountResponse = new AddMoneyToUPIFromAccountResponse();
-            addMoneyToUPIFromAccountResponse.setStatus(SUCCESS_ADD_MONEY_TO_UPI_FROM_MAIN_ACCOUNT);
-            return addMoneyToUPIFromAccountResponse;
+                AddMoneyToUPIFromAccountResponse addMoneyToUPIFromAccountResponse = new AddMoneyToUPIFromAccountResponse();
+                addMoneyToUPIFromAccountResponse.setStatus(SUCCESS_ADD_MONEY_TO_UPI_FROM_MAIN_ACCOUNT);
+                return addMoneyToUPIFromAccountResponse;
+            }
+
+        } catch (NullPointerException e) {
+
+            System.out.println("There is no records...");
         }
 
         throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");

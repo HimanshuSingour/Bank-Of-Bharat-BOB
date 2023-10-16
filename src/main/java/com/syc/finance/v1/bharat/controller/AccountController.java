@@ -87,17 +87,15 @@ public class AccountController {
 
     // upi
 
-    @PostMapping("/pay-upi-money")
+    @PostMapping("/pay-money-from-upi")
     ResponseEntity<PayUsingUpiResponse> payFromUpiId(@RequestBody PayUsingUpiRequest payUsingUpiRequest){
         PayUsingUpiResponse response = userService.payUsingUpi(payUsingUpiRequest);
         return new ResponseEntity<PayUsingUpiResponse>(response , HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/add-upi-money")
+    @PostMapping("/add-money-to-upi-from-bank")
     ResponseEntity<AddMoneyToUPIFromAccountResponse> payTo(@RequestBody AddMoneyToUPIFromAccountRequest addMoneyToUPIFromAccountRequest){
         AddMoneyToUPIFromAccountResponse response = userService.addingMoneyFromAccountNumberToUpi(addMoneyToUPIFromAccountRequest);
         return new ResponseEntity<AddMoneyToUPIFromAccountResponse>(response , HttpStatus.ACCEPTED);
     }
-
-
 }

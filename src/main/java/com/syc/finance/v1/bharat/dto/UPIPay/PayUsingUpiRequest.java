@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PayUsingUpiRequest {
 
-    private String UPI_ID;
+    private String upiId;
     private double payMoney;
 }
