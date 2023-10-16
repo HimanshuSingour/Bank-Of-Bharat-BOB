@@ -11,8 +11,8 @@ import com.syc.finance.v1.bharat.dto.Debit.DebitCredential;
 import com.syc.finance.v1.bharat.dto.Debit.DebitedResponse;
 import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountRequest;
 import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountResponse;
-import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiRequest;
-import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiResponse;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIRequest;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIResponse;
 
 import javax.security.auth.login.AccountNotFoundException;
 
@@ -25,7 +25,7 @@ public interface AccountService {
      CreditResponse creditYourMoney(CreditCredential creditCredential);
      DebitedResponse debitYourMoney(DebitCredential debitCredential);
      BalanceEnquiryResponse balanceEnquiry(BalanceEnquireyRequest balanceEnquireyRequest);
-     PayUsingUpiResponse payUsingUpi(PayUsingUpiRequest payUsingUpiRequest);
+     AddMoneyFromAccountToUPIResponse payUsingUpi(AddMoneyFromAccountToUPIRequest addMoneyFromAccountToUPIRequest);
      AddMoneyToUPIFromAccountResponse addingMoneyFromAccountNumberToUpi(AddMoneyToUPIFromAccountRequest addMoneyToUPIFromAccountRequest);
 
 }

@@ -17,4 +17,5 @@ public interface UPIDetailsRepositories extends JpaRepository<UpiInformation, St
     UpiInformation findByUpiId(@Param("upiId") String upiId);
 
 
+
 }

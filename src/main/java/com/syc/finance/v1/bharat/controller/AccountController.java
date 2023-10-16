@@ -10,11 +10,10 @@ import com.syc.finance.v1.bharat.dto.Credit.CreditCredential;
 import com.syc.finance.v1.bharat.dto.Credit.CreditResponse;
 import com.syc.finance.v1.bharat.dto.Debit.DebitCredential;
 import com.syc.finance.v1.bharat.dto.Debit.DebitedResponse;
-import com.syc.finance.v1.bharat.dto.UPI.UPIResponse;
 import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountRequest;
 import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountResponse;
-import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiRequest;
-import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiResponse;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIRequest;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIResponse;
 import com.syc.finance.v1.bharat.service.AccountService;
 import com.syc.finance.v1.bharat.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,9 +87,9 @@ public class AccountController {
     // upi
 
     @PostMapping("/pay-money-from-upi")
-    ResponseEntity<PayUsingUpiResponse> payFromUpiId(@RequestBody PayUsingUpiRequest payUsingUpiRequest){
-        PayUsingUpiResponse response = userService.payUsingUpi(payUsingUpiRequest);
-        return new ResponseEntity<PayUsingUpiResponse>(response , HttpStatus.ACCEPTED);
+    ResponseEntity<AddMoneyFromAccountToUPIResponse> payFromUpiId(@RequestBody AddMoneyFromAccountToUPIRequest addMoneyFromAccountToUPIRequest){
+        AddMoneyFromAccountToUPIResponse response = userService.payUsingUpi(addMoneyFromAccountToUPIRequest);
+        return new ResponseEntity<AddMoneyFromAccountToUPIResponse>(response , HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/add-money-to-upi-from-bank")

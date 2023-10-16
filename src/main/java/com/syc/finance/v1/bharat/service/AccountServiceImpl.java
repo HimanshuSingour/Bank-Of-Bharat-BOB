@@ -17,8 +17,8 @@ import com.syc.finance.v1.bharat.dto.Debit.DebitedResponse;
 import com.syc.finance.v1.bharat.dto.Transaction.TransactionRequest;
 import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountRequest;
 import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountResponse;
-import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiRequest;
-import com.syc.finance.v1.bharat.dto.UPIPay.PayUsingUpiResponse;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIRequest;
+import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIResponse;
 import com.syc.finance.v1.bharat.entity.AccountInformation;
 import com.syc.finance.v1.bharat.entity.NetBankingInformation;
 import com.syc.finance.v1.bharat.entity.UpiInformation;
@@ -336,11 +336,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    // adding money to account balance to UPI
+    // adding money from account balance to UPI, account -> UPI
     @Override
-    public PayUsingUpiResponse payUsingUpi(PayUsingUpiRequest payUsingUpiRequest) {
+    public AddMoneyFromAccountToUPIResponse payUsingUpi(AddMoneyFromAccountToUPIRequest addMoneyFromAccountToUPIRequest) {
 
-        UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(payUsingUpiRequest.getUpiId());
+        UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(addMoneyFromAccountToUPIRequest.getUpiId());
 
         AccountInformation accountInformation = new AccountInformation();
 
@@ -351,23 +351,26 @@ public class AccountServiceImpl implements AccountService {
             System.out.println("UPI ID not found.");
         }
 
-        if (upiInformation != null) {
 
-            double getFormUPI = payUsingUpiRequest.getPayMoney();
-            double getFromMainAccount = accountInformation.getAccountBalance();
-            double total = getFormUPI + getFromMainAccount;
+//        -------------------------------
+//
+//        if (upiInformation != null) {
+//
+//            double getFormUPI = payUsingUpiRequest.getPayMoney();
+//            double getFromMainAccount = accountInformation.getAccountBalance();
+//            double total = getFormUPI + getFromMainAccount;
+//
+//            accountInformation.setAccountBalance(total);
+//            accountDetailsRepositories.save(accountInformation);
+//
+//            PayUsingUpiResponse = new PayUsingUpiResponse();
+//            payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
+//            payUsingUpiResponse.setStatus(SUCCESS_STATUS);
+//            return payUsingUpiResponse;
+//        }
 
-            accountInformation.setAccountBalance(total);
-            accountDetailsRepositories.save(accountInformation);
-
-            PayUsingUpiResponse payUsingUpiResponse = new PayUsingUpiResponse();
-            payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
-            payUsingUpiResponse.setStatus(SUCCESS_STATUS);
-            return payUsingUpiResponse;
-        }
         return null;
     }
-
 
 
     public AddMoneyToUPIFromAccountResponse addingMoneyFromAccountNumberToUpi(AddMoneyToUPIFromAccountRequest addMoneyToUPIFromAccountRequest) {
