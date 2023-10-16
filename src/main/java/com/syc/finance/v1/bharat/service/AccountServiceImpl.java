@@ -341,33 +341,27 @@ public class AccountServiceImpl implements AccountService {
     public AddMoneyFromAccountToUPIResponse payUsingUpi(AddMoneyFromAccountToUPIRequest addMoneyFromAccountToUPIRequest) {
 
         UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(addMoneyFromAccountToUPIRequest.getUpiId());
-
         AccountInformation accountInformation = new AccountInformation();
 
-        //test still need to fix
         if (upiInformation != null) {
-            System.out.println(upiInformation.getUpiId());
-        } else {
-            System.out.println("UPI ID not found.");
+
+            double getFormUPI = addMoneyFromAccountToUPIRequest.getPayMoney();
+            double fromMainAccount = accountInformation.getAccountBalance();
+
+            double leftMoneyForMainAccount = getFormUPI - fromMainAccount;
+
+            accountInformation.setAccountBalance(leftMoneyForMainAccount);
+            accountDetailsRepositories.save(accountInformation);
+
+            upiInformation.setUPI_BALANCE(getFormUPI);
+            upiDetailsRepositories.save(upiInformation);
+
+
+            AddMoneyFromAccountToUPIResponse payUsingUpiResponse = new AddMoneyFromAccountToUPIResponse();
+            payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
+            payUsingUpiResponse.setStatus(SUCCESS_STATUS);
+            return payUsingUpiResponse;
         }
-
-
-//        -------------------------------
-//
-//        if (upiInformation != null) {
-//
-//            double getFormUPI = payUsingUpiRequest.getPayMoney();
-//            double getFromMainAccount = accountInformation.getAccountBalance();
-//            double total = getFormUPI + getFromMainAccount;
-//
-//            accountInformation.setAccountBalance(total);
-//            accountDetailsRepositories.save(accountInformation);
-//
-//            PayUsingUpiResponse = new PayUsingUpiResponse();
-//            payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
-//            payUsingUpiResponse.setStatus(SUCCESS_STATUS);
-//            return payUsingUpiResponse;
-//        }
 
         return null;
     }
