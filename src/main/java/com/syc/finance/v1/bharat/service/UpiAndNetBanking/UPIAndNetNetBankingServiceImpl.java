@@ -206,24 +206,7 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
 
         if(accountInformationForRecipient != null && accountInformationForSender != null){
 
-            //senders money
-            double sendersMoney = transferMoneyRequest.getTransferAmount();
-            double sendersBankAccount = accountInformationForSender.getAccountBalance() - sendersMoney;
 
-            accountInformationForSender.setAccountBalance(sendersBankAccount);
-            accountDetailsRepositories.save(accountInformationForSender);
-
-            //recipients money
-            double recipientMoney = accountInformationForRecipient.getAccountBalance();
-            double recvdBankAccount = sendersMoney + recipientMoney;
-
-            accountInformationForRecipient.setAccountBalance(recvdBankAccount);
-            accountDetailsRepositories.save(accountInformationForRecipient);
-
-            //response
-            TransferMoneyResponse transferMoneyResponse = new TransferMoneyResponse();
-            transferMoneyResponse.setResponseMessage(MONEY_SEND_SUCCESSFULLY);
-            return transferMoneyResponse;
         }
 
         else {
