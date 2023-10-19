@@ -2,10 +2,7 @@ package com.syc.finance.v1.bharat.service;
 
 import com.syc.finance.v1.bharat.Mapper.MapperToResponse;
 import com.syc.finance.v1.bharat.Mapper.MapperToUpdateResponse;
-import com.syc.finance.v1.bharat.Notifications.NotificationAlertForHighAmount;
-import com.syc.finance.v1.bharat.Notifications.NotificationBalanceEnquiry;
-import com.syc.finance.v1.bharat.Notifications.NotificationForCredit;
-import com.syc.finance.v1.bharat.Notifications.NotificationForDebited;
+import com.syc.finance.v1.bharat.Notifications.*;
 import com.syc.finance.v1.bharat.Utils.AccountDeletedSuccessResponse;
 import com.syc.finance.v1.bharat.Utils.AccountDetailsGenarators;
 import com.syc.finance.v1.bharat.dto.*;
@@ -106,6 +103,9 @@ public class AccountServiceImpl implements AccountService {
                     .bankPinCode(BANK_PIN)
                     .build();
 
+            NotificationForCreateAccount createAccount = new NotificationForCreateAccount();
+            createAccount.sendForCreateAccountNotification(accountInformation.getAccountHolderName());
+
             accountDetailsRepositories.save(accountInformation);
 
             UserResponse userRes = mapperToResponse.userInformationToUserResponse(accountInformation);
@@ -139,7 +139,10 @@ public class AccountServiceImpl implements AccountService {
                     .localDateTime(LocalDateTime.now())
                     .build();
 
+            NotificationForUpdateDetails updateDetailsNotification = new NotificationForUpdateDetails();
+            updateDetailsNotification.sendForUpdateAccountDetails(accountUpdatingDetailsRequest.getAccountHolderName());
 
+            accountDetailsRepositories.save(updateAccountDetails);
             MapperToUpdateResponse mapperToUpdateResponse = new MapperToUpdateResponse();
 
             return mapperToUpdateResponse.userInformationToUpdateAccountResponse(updateAccountDetails);

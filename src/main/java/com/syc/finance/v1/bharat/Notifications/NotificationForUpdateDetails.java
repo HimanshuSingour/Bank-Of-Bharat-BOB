@@ -4,18 +4,16 @@ import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
-
 import static com.syc.finance.v1.bharat.Utils.AccountDetailsConstants.TWILIO_PHONE_NUMBER;
 
+
 @Slf4j
-public class NotificationAlertForHighAmount {
+public class NotificationForUpdateDetails {
 
-    public void sendForHighAmountOfMoneyTransfer() {
+    public void sendForUpdateAccountDetails(String accountNumber) {
 
-        String messageBody = "Dear customer, you have recently made a high-value transaction. " +
-                "If you did not authorize this transaction, please contact us at 626-676-9479. ";
-
+        String messageBody = "Your account details have been successfully updated at Bank of Bharat. Account Holder's Name:"
+                + accountNumber;
 
         PhoneNumber recipientNumber = new com.twilio.type.PhoneNumber("+916266769479");
         PhoneNumber twilioNumber = new com.twilio.type.PhoneNumber(TWILIO_PHONE_NUMBER);
