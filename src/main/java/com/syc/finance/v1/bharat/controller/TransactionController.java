@@ -1,7 +1,7 @@
 package com.syc.finance.v1.bharat.controller;
 
 import com.syc.finance.v1.bharat.dto.Accounts.Transaction.TransactionResponse;
-import com.syc.finance.v1.bharat.service.TransactionService;
+import com.syc.finance.v1.bharat.service.TransactionService.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

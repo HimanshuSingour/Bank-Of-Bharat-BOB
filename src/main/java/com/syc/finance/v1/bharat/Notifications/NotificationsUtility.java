@@ -23,6 +23,12 @@ public class NotificationsUtility {
         notificationConfig.sendSMS(messageBody);
     }
 
+    public void sendForDeletedAccount() {
+        String messageBody = "Your Account has been deleted successfully !!";
+        notificationConfig.sendSMS(messageBody);
+    }
+
+
     public void sendForNetBankingCreation() {
         String messageBody = "Your NetBanking-ID has been created successfully, Proceeding for UPI-ID creation, Congratulation";
         notificationConfig.sendSMS(messageBody);

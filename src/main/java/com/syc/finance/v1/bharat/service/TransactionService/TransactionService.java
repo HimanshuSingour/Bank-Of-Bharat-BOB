@@ -1,4 +1,4 @@
-package com.syc.finance.v1.bharat.service;
+package com.syc.finance.v1.bharat.service.TransactionService;
 
 import com.syc.finance.v1.bharat.dto.Accounts.Transaction.TransactionResponse;
 import com.syc.finance.v1.bharat.dto.Transaction.TransactionRequest;

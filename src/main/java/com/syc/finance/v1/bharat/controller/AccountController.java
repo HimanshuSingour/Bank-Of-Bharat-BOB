@@ -15,7 +15,7 @@ import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountResponse;
 import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIRequest;
 import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIResponse;
 import com.syc.finance.v1.bharat.service.AccountService;
-import com.syc.finance.v1.bharat.service.TransactionService;
+import com.syc.finance.v1.bharat.service.TransactionService.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

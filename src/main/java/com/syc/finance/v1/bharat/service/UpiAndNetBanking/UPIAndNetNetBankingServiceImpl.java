@@ -41,6 +41,9 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
     @Autowired
     private NetBankingRepositories netBankingRepositories;
 
+    @Autowired
+    private NotificationsUtility notificationsUtility;
+
     @Override
     public UPIResponse upiCreate(UPIRequest upiRequest) {
 
@@ -93,7 +96,6 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
                     accountInfo.setIsHaveUpiId("YES");
                     accountDetailsRepositories.save(accountInfo);
 
-                    NotificationsUtility notificationsUtility = new NotificationsUtility();
                     notificationsUtility.sendForUPIIdCreation(response.getUpiId());
 
                     return response;
@@ -144,7 +146,6 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
                 netBankingResponseEntity.setNet_BANKING_ID(netBankingResponse.getNet_BANKING_ID());
                 netBankingResponseEntity.setPassword(netBankingRequest.getPassword());
 
-                NotificationsUtility notificationsUtility = new NotificationsUtility();
                 notificationsUtility.sendForNetBankingCreation();
 
                 netBankingRepositories.save(netBankingResponseEntity);
@@ -218,7 +219,6 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
             if(sendersMoney >= 10000){
 
                 // need to pass the phoneNumber in below methods
-                NotificationsUtility notificationsUtility = new NotificationsUtility();
                 notificationsUtility.sendForHighAmountOfMoneyTransfer();
 
                 double sendersBankAccount = accountInformationForSender.getAccountBalance() - sendersMoney;
