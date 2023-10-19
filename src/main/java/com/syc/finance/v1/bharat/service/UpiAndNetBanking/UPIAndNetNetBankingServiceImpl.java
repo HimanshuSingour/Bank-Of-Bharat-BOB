@@ -204,6 +204,7 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
                 transferMoneyRequest.getAccountNumberOfSender());
 
 
+        //  checking for both exist in db
         if(accountInformationForRecipient != null && accountInformationForSender != null){
 
             //senders money
