@@ -1,4 +1,5 @@
 package com.syc.finance.v1.bharat.Notifications;
+
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 public class NotificationsUtility {
 
     NotificationConfig notificationConfig = new NotificationConfig();
+
 
     public void sendForUPIIdCreation(String upiId) {
         String messageBody = "Your UPI has been created successfully: " + upiId;

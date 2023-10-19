@@ -1,13 +1,12 @@
-package com.syc.finance.v1.bharat.exceptions;
+package com.syc.finance.v1.bharat.exceptions.handler;
 
-import com.syc.finance.v1.bharat.exceptions.exceptionSteps.*;
+import com.syc.finance.v1.bharat.exceptions.*;
 import com.twilio.exception.ApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.syc.finance.v1.bharat.Utils.AccountDetailsForExceptionalHandler.PENDING;
 import static com.syc.finance.v1.bharat.Utils.AccountDetailsForExceptionalHandler.REJECTED;
 
 @RestControllerAdvice

@@ -21,7 +21,7 @@ import com.syc.finance.v1.bharat.entity.AccountInformation;
 import com.syc.finance.v1.bharat.entity.NetBankingInformation;
 import static com.syc.finance.v1.bharat.Utils.AccountDetailsConstants.*;
 import com.syc.finance.v1.bharat.entity.UpiInformation;
-import com.syc.finance.v1.bharat.exceptions.exceptionSteps.*;
+import com.syc.finance.v1.bharat.exceptions.*;
 import com.syc.finance.v1.bharat.repository.TransactionHistoryRepository;
 import com.syc.finance.v1.bharat.repository.AccountDetailsRepositories;
 import com.syc.finance.v1.bharat.repository.UPIDetailsRepositories;
@@ -49,6 +49,9 @@ public class AccountServiceImpl implements AccountService {
     private UPIDetailsRepositories upiDetailsRepositories;
     @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    private NotificationsUtility notificationsUtility;
 
     static {
         Twilio.init(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
@@ -105,7 +108,6 @@ public class AccountServiceImpl implements AccountService {
                     .build();
 
 
-            NotificationsUtility notificationsUtility = new NotificationsUtility();
            notificationsUtility.ssendForCreateAccountNotification(accountInformation.getAccountHolderName());
 
             accountDetailsRepositories.save(accountInformation);

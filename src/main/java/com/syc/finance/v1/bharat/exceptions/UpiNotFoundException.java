@@ -1,4 +1,4 @@
-package com.syc.finance.v1.bharat.exceptions.exceptionSteps;
+package com.syc.finance.v1.bharat.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

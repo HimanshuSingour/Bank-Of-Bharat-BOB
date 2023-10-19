@@ -1,4 +1,4 @@
-package com.syc.finance.v1.bharat.exceptions;
+package com.syc.finance.v1.bharat.exceptions.handler;
 
 import com.syc.finance.v1.bharat.Utils.AccountDetailsForExceptionalHandler;
 import lombok.AllArgsConstructor;
