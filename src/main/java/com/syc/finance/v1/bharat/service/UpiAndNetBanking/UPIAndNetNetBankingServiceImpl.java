@@ -1,5 +1,7 @@
 package com.syc.finance.v1.bharat.service.UpiAndNetBanking;
 
+import com.syc.finance.v1.bharat.Notifications.NotificationAlertForHighAmount;
+import com.syc.finance.v1.bharat.Notifications.NotificationBalanceEnquiry;
 import com.syc.finance.v1.bharat.Utils.InternetBankingIdGenerator;
 import com.syc.finance.v1.bharat.Utils.UPIDGenerater;
 import com.syc.finance.v1.bharat.dto.InternetBanking.GetNetBankingRequest;
@@ -191,8 +193,6 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
         throw new DetailsNotFountException("Details Not Found..");
     }
 
-    // Development Stage
-
     @Override
     public TransferMoneyResponse moneyTransferAccountToAccount(TransferMoneyRequest transferMoneyRequest) {
 
@@ -203,33 +203,59 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
         AccountInformation accountInformationForSender = accountDetailsRepositories.findByAccountNumber(
                 transferMoneyRequest.getAccountNumberOfSender());
 
-
-        //  checking for both exist in db
         if(accountInformationForRecipient != null && accountInformationForSender != null){
 
             //senders money
             double sendersMoney = transferMoneyRequest.getTransferAmount();
-            double sendersBankAccount = accountInformationForSender.getAccountBalance() - sendersMoney;
+            if(sendersMoney >= 10000){
 
-            accountInformationForSender.setAccountBalance(sendersBankAccount);
-            accountDetailsRepositories.save(accountInformationForSender);
+                // need to pass the phoneNumber in below methods
+                NotificationAlertForHighAmount notificationAlertForHighAmount = new NotificationAlertForHighAmount();
+                notificationAlertForHighAmount.sendForHighAmountOfMoneyTransfer();
 
-            //recipients money
-            double recipientMoney = accountInformationForRecipient.getAccountBalance();
-            double recvdBankAccount = sendersMoney + recipientMoney;
+                double sendersBankAccount = accountInformationForSender.getAccountBalance() - sendersMoney;
 
-            accountInformationForRecipient.setAccountBalance(recvdBankAccount);
-            accountDetailsRepositories.save(accountInformationForRecipient);
+                accountInformationForSender.setAccountBalance(sendersBankAccount);
+                accountDetailsRepositories.save(accountInformationForSender);
 
-            //response
-            TransferMoneyResponse transferMoneyResponse = new TransferMoneyResponse();
-            transferMoneyResponse.setResponseMessage(MONEY_SEND_SUCCESSFULLY);
-            return transferMoneyResponse;
+                //recipients money
+                double recipientMoney = accountInformationForRecipient.getAccountBalance();
+                double recdBankAccount = sendersMoney + recipientMoney;
+
+                accountInformationForRecipient.setAccountBalance(recdBankAccount);
+                accountDetailsRepositories.save(accountInformationForRecipient);
+
+                //response
+                TransferMoneyResponse transferMoneyResponse = new TransferMoneyResponse();
+                transferMoneyResponse.setResponseMessage(MONEY_SEND_SUCCESSFULLY);
+                return transferMoneyResponse;
+
+            }
+            else{
+
+                double sendersBankAccount = accountInformationForSender.getAccountBalance() - sendersMoney;
+
+                accountInformationForSender.setAccountBalance(sendersBankAccount);
+                accountDetailsRepositories.save(accountInformationForSender);
+
+                //recipients money
+                double recipientMoney = accountInformationForRecipient.getAccountBalance();
+                double recdBankAccount = sendersMoney + recipientMoney;
+
+                accountInformationForRecipient.setAccountBalance(recdBankAccount);
+                accountDetailsRepositories.save(accountInformationForRecipient);
+
+                //response
+                TransferMoneyResponse transferMoneyResponse = new TransferMoneyResponse();
+                transferMoneyResponse.setResponseMessage(MONEY_SEND_SUCCESSFULLY);
+                return transferMoneyResponse;
+            }
+
         }
 
         else {
 
-            throw new DetailsNotFountException("");
+            throw new DetailsNotFountException("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
         }
 
     }

@@ -11,12 +11,13 @@ import static com.syc.finance.v1.bharat.Utils.AccountDetailsConstants.TWILIO_PHO
 @Slf4j
 public class NotificationAlertForHighAmount {
 
-    public void sendForBalanceEnquiry(String accountNumber, double accountBalance, String phoneNumber) {
-        String messageBody = "Dear Customer, Your account balance for account number " +
-                accountNumber + " is " + accountBalance + "\n" + LocalDateTime.now();
+    public void sendForHighAmountOfMoneyTransfer() {
+
+        String messageBody = "Create an alert message like this: 'Dear customer, you have recently made a high-value transaction. " +
+                "If you did not authorize this transaction, please contact us at 626-676-9479. ";
 
 
-        PhoneNumber recipientNumber = new com.twilio.type.PhoneNumber("+91"+phoneNumber);
+        PhoneNumber recipientNumber = new com.twilio.type.PhoneNumber("+916266769479");
         PhoneNumber twilioNumber = new com.twilio.type.PhoneNumber(TWILIO_PHONE_NUMBER);
 
         try {
