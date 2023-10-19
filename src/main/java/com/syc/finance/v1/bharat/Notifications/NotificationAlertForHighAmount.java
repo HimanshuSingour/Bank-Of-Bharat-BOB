@@ -13,7 +13,7 @@ public class NotificationAlertForHighAmount {
 
     public void sendForHighAmountOfMoneyTransfer() {
 
-        String messageBody = "Create an alert message like this: 'Dear customer, you have recently made a high-value transaction. " +
+        String messageBody = "Dear customer, you have recently made a high-value transaction. " +
                 "If you did not authorize this transaction, please contact us at 626-676-9479. ";
 
 
