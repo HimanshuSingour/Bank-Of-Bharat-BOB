@@ -1,6 +1,9 @@
 package com.syc.finance.v1.bharat.service.UpiAndNetBanking;
 
 import com.syc.finance.v1.bharat.Notifications.NotificationAlertForHighAmount;
+import com.syc.finance.v1.bharat.Notifications.NotificationForCreateAccount;
+import com.syc.finance.v1.bharat.Notifications.NotificationForNetBankingCreation;
+import com.syc.finance.v1.bharat.Notifications.NotificationForUPICreation;
 import com.syc.finance.v1.bharat.Utils.InternetBankingIdGenerator;
 import com.syc.finance.v1.bharat.Utils.UPIDGenerater;
 import com.syc.finance.v1.bharat.dto.InternetBanking.GetNetBankingRequest;
@@ -91,6 +94,10 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
 
                     accountInfo.setIsHaveUpiId("YES");
                     accountDetailsRepositories.save(accountInfo);
+
+                    NotificationForUPICreation netBakingCreation = new NotificationForUPICreation();
+                    netBakingCreation.sendForUPIIdCreation(response.getUpiId());
+
                     return response;
 
                 } else {
@@ -138,6 +145,9 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
                 netBankingResponseEntity.setLocalDateTime(netBankingResponse.getLocalDateTime());
                 netBankingResponseEntity.setNet_BANKING_ID(netBankingResponse.getNet_BANKING_ID());
                 netBankingResponseEntity.setPassword(netBankingRequest.getPassword());
+
+                NotificationForNetBankingCreation netBakingCreation = new NotificationForNetBankingCreation();
+                netBakingCreation.sendForNetBankingCreation();
 
                 netBankingRepositories.save(netBankingResponseEntity);
                 return netBankingResponse;
