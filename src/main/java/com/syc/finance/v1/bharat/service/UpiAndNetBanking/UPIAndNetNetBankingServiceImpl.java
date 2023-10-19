@@ -1,9 +1,6 @@
 package com.syc.finance.v1.bharat.service.UpiAndNetBanking;
 
-import com.syc.finance.v1.bharat.Notifications.NotificationAlertForHighAmount;
-import com.syc.finance.v1.bharat.Notifications.NotificationForCreateAccount;
-import com.syc.finance.v1.bharat.Notifications.NotificationForNetBankingCreation;
-import com.syc.finance.v1.bharat.Notifications.NotificationForUPICreation;
+import com.syc.finance.v1.bharat.Notifications.NotificationsUtility;
 import com.syc.finance.v1.bharat.Utils.InternetBankingIdGenerator;
 import com.syc.finance.v1.bharat.Utils.UPIDGenerater;
 import com.syc.finance.v1.bharat.dto.InternetBanking.GetNetBankingRequest;
@@ -29,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static com.syc.finance.v1.bharat.Utils.AccountDetailsConstants.*;
+
 
 @Service
 @Slf4j
@@ -95,8 +93,8 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
                     accountInfo.setIsHaveUpiId("YES");
                     accountDetailsRepositories.save(accountInfo);
 
-                    NotificationForUPICreation netBakingCreation = new NotificationForUPICreation();
-                    netBakingCreation.sendForUPIIdCreation(response.getUpiId());
+                    NotificationsUtility notificationsUtility = new NotificationsUtility();
+                    notificationsUtility.sendForUPIIdCreation(response.getUpiId());
 
                     return response;
 
@@ -146,8 +144,8 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
                 netBankingResponseEntity.setNet_BANKING_ID(netBankingResponse.getNet_BANKING_ID());
                 netBankingResponseEntity.setPassword(netBankingRequest.getPassword());
 
-                NotificationForNetBankingCreation netBakingCreation = new NotificationForNetBankingCreation();
-                netBakingCreation.sendForNetBankingCreation();
+                NotificationsUtility notificationsUtility = new NotificationsUtility();
+                notificationsUtility.sendForNetBankingCreation();
 
                 netBankingRepositories.save(netBankingResponseEntity);
                 return netBankingResponse;
@@ -216,11 +214,12 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
 
             //senders money
             double sendersMoney = transferMoneyRequest.getTransferAmount();
+
             if(sendersMoney >= 10000){
 
                 // need to pass the phoneNumber in below methods
-                NotificationAlertForHighAmount notificationAlertForHighAmount = new NotificationAlertForHighAmount();
-                notificationAlertForHighAmount.sendForHighAmountOfMoneyTransfer();
+                NotificationsUtility notificationsUtility = new NotificationsUtility();
+                notificationsUtility.sendForHighAmountOfMoneyTransfer();
 
                 double sendersBankAccount = accountInformationForSender.getAccountBalance() - sendersMoney;
 
