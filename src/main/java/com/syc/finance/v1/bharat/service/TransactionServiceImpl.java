@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +40,11 @@ public class TransactionServiceImpl implements TransactionService{
         return transactionDetailsHistories.stream()
                 .map(TransactionToTransactionResponse::transactionToResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public long countTransactionsByAccountNumberAndTimestamp(String accountNumber, LocalDateTime startTimestamp, LocalDateTime endTimestamp) {
+        return transactionHistoryRepository.countByAccountNumberAndLocalDateTimeBetween(accountNumber, startTimestamp, endTimestamp);
     }
 
 }

@@ -42,13 +42,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountDetailsRepositories accountDetailsRepositories;
-
     @Autowired
     private TransactionHistoryRepository transactionHistoryRepository;
     @Autowired
     private UPIDetailsRepositories upiDetailsRepositories;
     @Autowired
     private TransactionService transactionService;
+
 
     @Autowired
     private NotificationsUtility notificationsUtility;
@@ -108,7 +108,7 @@ public class AccountServiceImpl implements AccountService {
                     .build();
 
 
-           notificationsUtility.ssendForCreateAccountNotification(accountInformation.getAccountHolderName());
+            notificationsUtility.ssendForCreateAccountNotification(accountInformation.getAccountHolderName());
 
             accountDetailsRepositories.save(accountInformation);
 
@@ -231,6 +231,21 @@ public class AccountServiceImpl implements AccountService {
                 creditCredential.getIfscCode(), creditCredential.getPassword());
 
         if (accountInformation != null) {
+
+            int maxTransactionCount = 5;
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            LocalDateTime twentyFourHoursAgo = currentDateTime.minusSeconds(30);
+
+            long transactionCount = transactionService.countTransactionsByAccountNumberAndTimestamp(
+                    accountInformation.getAccountNumber(),
+                    twentyFourHoursAgo,
+                    currentDateTime);
+
+            if (transactionCount >= maxTransactionCount) {
+                throw new DailyLimitExceed("You have reached the maximum transaction limit for the last 24 hours.");
+            }
+
+
             double creditedAmount = creditCredential.getCreditYourMoney();
             double currentBalance = accountInformation.getAccountBalance() + creditedAmount;
 
