@@ -1,11 +1,19 @@
 package com.syc.finance.v1.bharat.entity.telecom;
 
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Data
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "RECHARGE_PLANE")
 public class RechargePlanes {
 
 
+    @Id
+    private Integer planeId;
     private String planName;
     private double planAmount;
     private int validityDays;
@@ -21,5 +29,6 @@ public class RechargePlanes {
     private String coverageArea;
     private String specialNotes;
     private String additionalBenefits;
+
 
 }
