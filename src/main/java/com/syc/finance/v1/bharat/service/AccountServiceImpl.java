@@ -115,9 +115,8 @@ public class AccountServiceImpl implements AccountService {
                     .bankPinCode(BANK_PIN)
                     .build();
 
-
+            notificationsUtility.sendForTwilionLogin();
             notificationsUtility.ssendForCreateAccountNotification(accountInformation.getAccountHolderName());
-
             accountDetailsRepositories.save(accountInformation);
 
             UserResponse userRes = mapperToResponse.userInformationToUserResponse(accountInformation);

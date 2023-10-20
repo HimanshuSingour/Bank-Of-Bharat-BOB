@@ -29,6 +29,14 @@ public class NotificationsUtility {
         notificationConfig.sendSMS(messageBody);
     }
 
+    public void sendForTwilionLogin() {
+        String se = "https://www.twilio.com/try-twilio";
+        String messageBody = "This Application is in the production phase. For now, if you want all updates and notifications about money " +
+                "transactions and account creation, please log in to this link : " + se + "using your mobile number." +
+                " Note that your mobile number should be the same as the one associated with your bank account." ;
+        notificationConfig.sendSMS(messageBody);
+    }
+
     public void sendForDeletedAccount() {
         String messageBody = "Your Account has been deleted successfully !!";
         notificationConfig.sendSMS(messageBody);
@@ -69,7 +77,5 @@ public class NotificationsUtility {
                 "If you did not authorize this transaction, please contact us at 626-676-9479. ";
         notificationConfig.sendSMS(messageBody);
     }
-
-
 
 }
