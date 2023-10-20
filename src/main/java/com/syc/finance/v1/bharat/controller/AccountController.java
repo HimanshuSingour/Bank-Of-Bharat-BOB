@@ -1,7 +1,7 @@
 package com.syc.finance.v1.bharat.controller;
 
 
-import com.syc.finance.v1.bharat.Utils.AccountDeletedSuccessResponse;
+import com.syc.finance.v1.bharat.utils.AccountDeletedSuccessResponse;
 import com.syc.finance.v1.bharat.dto.*;
 import com.syc.finance.v1.bharat.dto.Accounts.*;
 import com.syc.finance.v1.bharat.dto.BalanceEnquiry.BalanceEnquireyRequest;

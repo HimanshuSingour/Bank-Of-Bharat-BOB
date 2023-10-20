@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.syc.finance.v1.bharat.Utils.AccountDetailsForExceptionalHandler.REJECTED;
+import static com.syc.finance.v1.bharat.utils.AccountDetailsForExceptionalHandler.REJECTED;
 
 @RestControllerAdvice
 public class GlobalExceptionHandling {

@@ -9,8 +9,6 @@ import java.util.List;
 public interface TransactionService {
 
     void saveTransaction(TransactionRequest transactionRequest);
-
     List<TransactionResponse> getAllTransaction(String accountNumber);
-
     long countTransactionsByAccountNumberAndTimestamp(String accountNumber, LocalDateTime twentyFourHoursAgo, LocalDateTime currentDateTime);
 }

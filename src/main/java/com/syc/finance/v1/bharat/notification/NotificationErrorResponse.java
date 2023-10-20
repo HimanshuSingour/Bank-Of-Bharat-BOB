@@ -1,4 +1,4 @@
-package com.syc.finance.v1.bharat.Notifications;
+package com.syc.finance.v1.bharat.notification;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

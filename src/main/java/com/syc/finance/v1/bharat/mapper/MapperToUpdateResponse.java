@@ -1,4 +1,4 @@
-package com.syc.finance.v1.bharat.Mapper;
+package com.syc.finance.v1.bharat.mapper;
 
 import com.syc.finance.v1.bharat.dto.Accounts.AccountUpdateDetailsResponse;
 import com.syc.finance.v1.bharat.entity.AccountInformation;

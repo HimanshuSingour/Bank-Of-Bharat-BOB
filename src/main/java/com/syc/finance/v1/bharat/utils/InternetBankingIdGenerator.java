@@ -1,4 +1,4 @@
-package com.syc.finance.v1.bharat.Utils;
+package com.syc.finance.v1.bharat.utils;
 
 import java.util.Random;
 

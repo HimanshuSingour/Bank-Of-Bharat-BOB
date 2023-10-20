@@ -1,8 +1,8 @@
 package com.syc.finance.v1.bharat.service.UpiAndNetBanking;
 
-import com.syc.finance.v1.bharat.Notifications.NotificationsUtility;
-import com.syc.finance.v1.bharat.Utils.InternetBankingIdGenerator;
-import com.syc.finance.v1.bharat.Utils.UPIDGenerater;
+import com.syc.finance.v1.bharat.notification.NotificationsUtility;
+import com.syc.finance.v1.bharat.utils.InternetBankingIdGenerator;
+import com.syc.finance.v1.bharat.utils.UPIDGenerater;
 import com.syc.finance.v1.bharat.dto.InternetBanking.GetNetBankingRequest;
 import com.syc.finance.v1.bharat.dto.InternetBanking.NetBankingRequest;
 import com.syc.finance.v1.bharat.dto.InternetBanking.NetBankingResponse;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static com.syc.finance.v1.bharat.Utils.AccountDetailsConstants.*;
+import static com.syc.finance.v1.bharat.utils.AccountDetailsConstants.*;
 
 
 @Service

@@ -1,6 +1,6 @@
 package com.syc.finance.v1.bharat.exceptions.handler;
 
-import com.syc.finance.v1.bharat.Utils.AccountDetailsForExceptionalHandler;
+import com.syc.finance.v1.bharat.utils.AccountDetailsForExceptionalHandler;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
