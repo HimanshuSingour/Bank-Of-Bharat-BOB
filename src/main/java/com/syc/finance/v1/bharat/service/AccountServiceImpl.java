@@ -150,7 +150,6 @@ public class AccountServiceImpl implements AccountService {
                     .build();
 
             notificationsUtility.sendForUpdateAccountDetails(accountUpdatingDetailsRequest.getAccountHolderName());
-
             accountDetailsRepositories.save(updateAccountDetails);
             MapperToUpdateResponse mapperToUpdateResponse = new MapperToUpdateResponse();
 
