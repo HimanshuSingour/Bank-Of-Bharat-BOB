@@ -14,7 +14,7 @@ public class AccountDetailsConstants {
     public static final String BANK_VI_ACCOUNT_BALANCE_DEBITED = "Money Has Been Debited Successfully !!";
 
     public static final String TWILIO_ACCOUNT_SID = "ACd43b45b461dafda49453b040eab3a27f";
-    public static final String TWILIO_AUTH_TOKEN = "503e811027f7da4a25891518d9051484";
+    public static final String TWILIO_AUTH_TOKEN = "0e5f6c2b2bf9508cf17e96f8d2170316";
     public static final String TWILIO_PHONE_NUMBER = "+12313594081";
 
     public static final String BANK_V2_CREDIT = "CREDIT";

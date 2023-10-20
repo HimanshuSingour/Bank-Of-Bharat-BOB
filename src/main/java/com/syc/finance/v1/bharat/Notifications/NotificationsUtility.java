@@ -13,8 +13,14 @@ public class NotificationsUtility {
     NotificationConfig notificationConfig = new NotificationConfig();
 
 
+
     public void sendForUPIIdCreation(String upiId) {
         String messageBody = "Your UPI has been created successfully: " + upiId;
+        notificationConfig.sendSMS(messageBody);
+    }
+
+    public void sendForNetBankingCreationAlert() {
+        String messageBody = "You have requested the creation of a UPI ID. Note: To create a UPI ID, you need to first create a NetBanking ID, and then you can proceed.";
         notificationConfig.sendSMS(messageBody);
     }
 

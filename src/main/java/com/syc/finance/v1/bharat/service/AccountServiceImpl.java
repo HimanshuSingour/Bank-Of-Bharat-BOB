@@ -294,11 +294,13 @@ public class AccountServiceImpl implements AccountService {
 
             if (debitedAmount >= 10000) {
 
-                notificationsUtility.sendForHighAmountOfMoneyTransfer();
+
 
                 double currentBalance = accountInformation.getAccountBalance() - debitedAmount;
 
                 if (currentBalance >= debitedAmount) {
+
+                    notificationsUtility.sendForHighAmountOfMoneyTransfer();
                     accountInformation.setAccountBalance(currentBalance);
                     accountInformation = accountDetailsRepositories.save(accountInformation);
                     debitCredential.setDebitYourMoney(accountInformation.getAccountBalance());

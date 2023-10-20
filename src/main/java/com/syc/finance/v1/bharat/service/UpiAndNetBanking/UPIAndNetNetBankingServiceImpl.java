@@ -57,6 +57,8 @@ public class UPIAndNetNetBankingServiceImpl implements UPIAndNetBankingService {
         if (accountInfo != null) {
 
             if (existingNetBanking == null) {
+
+                notificationsUtility.sendForNetBankingCreationAlert();
                 throw new NotHavingNetbanking("Account need to create a net banking ID first in order to be able to create a UPI ID.");
 
             } else {
