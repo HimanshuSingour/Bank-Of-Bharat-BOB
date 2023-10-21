@@ -1,9 +1,10 @@
 package com.syc.finance.v1.bharat.service.Telecom;
 
+import com.syc.finance.v1.bharat.dto.Telecom.RechargePlanActivitionInfoRequest;
 import com.syc.finance.v1.bharat.dto.Telecom.ServiceProviderRequest;
 import com.syc.finance.v1.bharat.entity.telecom.RechargePlanes;
 import com.syc.finance.v1.bharat.entity.telecom.ServiceProvider;
-import com.syc.finance.v1.bharat.exceptions.RechangeDetailsNotValid;
+import com.syc.finance.v1.bharat.exceptions.DetailsNotFountException;
 import com.syc.finance.v1.bharat.exceptions.ServiceProviderIsNullException;
 import com.syc.finance.v1.bharat.exceptions.ServiceProviderValidationException;
 import com.syc.finance.v1.bharat.repository.RechangeRepositories;
@@ -11,8 +12,7 @@ import com.syc.finance.v1.bharat.repository.ServiceProviderRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.UUID;
+import java.util.List;
 
 @Service
 public class TelecomServiceImpl implements TelecomService {
@@ -24,10 +24,9 @@ public class TelecomServiceImpl implements TelecomService {
     private RechangeRepositories rechangeRepositories;
 
 
-
     // For Client (Add Provider Info)
     @Override
-    public ServiceProvider addServiceProvide(ServiceProvider service) {
+    public ServiceProvider addServiceProvides(ServiceProvider service) {
 
         if (service == null) {
             throw new ServiceProviderIsNullException("Service provider is null");
@@ -39,6 +38,7 @@ public class TelecomServiceImpl implements TelecomService {
 
         ServiceProvider provider = ServiceProvider.builder()
                 .providerId(service.getProviderId())
+
                 .serviceProviderName(service.getServiceProviderName())
                 .website(service.getWebsite())
                 .build();
@@ -49,18 +49,31 @@ public class TelecomServiceImpl implements TelecomService {
     }
 
     @Override
-    public RechargePlanes addRechargePlans(RechargePlanes rechargePlanes, ServiceProviderRequest serviceProviderRequest) {
+    public RechargePlanes addRechargePlan(RechargePlanes newRechargePlan) {
 
-         ServiceProvider provider = serviceProviderRepositories.findByServiceProviderName(serviceProviderRequest.getServiceProviderName());
+        return null;
+    }
 
-       if(provider != null){
-           System.out.println("provider is present");
-       }
-       else {
-           System.out.println("Not");
-       }
+    @Override
+    public List<RechargePlanes> getAllRechargePlansByProviderName(ServiceProviderRequest serviceProviderRequest) {
+        return null;
+    }
 
-        return rechargePlanes;
+    @Override
+    public List<RechargePlanes> getAllRechargeAboveTheGivenAmount(ServiceProviderRequest serviceProviderRequest, double aboveAmount) {
+        return null;
+    }
+
+    @Override
+    public List<RechargePlanes> getAllRechargeBelowTheGivenAmount(ServiceProviderRequest serviceProviderRequest, double BelowAmount) {
+        return null;
+    }
+
+    @Override
+    public RechargePlanActivitionInfoRequest getActivationInfo(ServiceProviderRequest serviceProviderRequest, String packId) {
+        return null;
     }
 
 }
+
+

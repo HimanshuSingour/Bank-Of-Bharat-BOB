@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ServiceProviderRequest {
+public class RechargePlanActivitionInfoRequest {
 
-    private String serviceProviderName;
+    private String Id;
 }

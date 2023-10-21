@@ -16,7 +16,7 @@ import java.util.List;
 public class ServiceProvider {
 
     @Id
-    private Integer providerId;
+    private String providerId;
 
     private String serviceProviderName;
     private String website;

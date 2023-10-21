@@ -13,7 +13,7 @@ public class RechargePlanes {
 
 
     @Id
-    private Integer planeId;
+    private String planeId;
     private String planName;
     private double planAmount;
     private int validityDays;

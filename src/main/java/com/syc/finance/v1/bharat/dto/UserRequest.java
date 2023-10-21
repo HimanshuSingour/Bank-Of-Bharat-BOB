@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRequest {
 
-
         private String accountHolderName;
         private String contactEmail;
         private String contactPhone;

@@ -8,10 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ServiceProviderRepositories extends JpaRepository<ServiceProvider, Integer> {
+public interface ServiceProviderRepositories extends JpaRepository<ServiceProvider, String> {
 
-    @Query("SELECT s FROM ServiceProvider s WHERE s.serviceProviderName = :serviceProviderName")
-    ServiceProvider findByServiceProviderName(String serviceProviderName);
-
-
+     ServiceProvider findByProviderId(String providedId);
 }
