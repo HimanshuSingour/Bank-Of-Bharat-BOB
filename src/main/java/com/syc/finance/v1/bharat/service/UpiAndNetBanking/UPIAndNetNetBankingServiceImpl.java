@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static com.syc.finance.v1.bharat.utils.AccountDetailsConstants.*;
+import static com.syc.finance.v1.bharat.constants.AccountDetailsConstants.*;
 
 
 @Service

@@ -1,5 +1,7 @@
 package com.syc.finance.v1.bharat.service;
 
+import com.syc.finance.v1.bharat.dto.Update.UpdateAmountManually;
+import com.syc.finance.v1.bharat.dto.Update.UpdateAmountResponse;
 import com.syc.finance.v1.bharat.utils.AccountDeletedSuccessResponse;
 import com.syc.finance.v1.bharat.dto.*;
 import com.syc.finance.v1.bharat.dto.Accounts.*;
@@ -27,5 +29,6 @@ public interface AccountService {
      BalanceEnquiryResponse balanceEnquiry(BalanceEnquireyRequest balanceEnquireyRequest);
      AddMoneyFromAccountToUPIResponse payUsingUpi(AddMoneyFromAccountToUPIRequest addMoneyFromAccountToUPIRequest);
      AddMoneyToUPIFromAccountResponse addingMoneyFromAccountNumberToUpi(AddMoneyToUPIFromAccountRequest addMoneyToUPIFromAccountRequest);
+     UpdateAmountResponse updateAmountInPerson(UpdateAmountManually updateAmountManually);
 
 }

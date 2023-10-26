@@ -1,6 +1,5 @@
 package com.syc.finance.v1.bharat.repository;
 
-import com.syc.finance.v1.bharat.dto.UPI.UPIResponse;
 import com.syc.finance.v1.bharat.entity.UpiInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

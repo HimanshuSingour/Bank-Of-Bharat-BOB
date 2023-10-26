@@ -1,4 +1,6 @@
 package com.syc.finance.v1.bharat.service;
+import com.syc.finance.v1.bharat.dto.Update.UpdateAmountManually;
+import com.syc.finance.v1.bharat.dto.Update.UpdateAmountResponse;
 import com.syc.finance.v1.bharat.mapper.MapperToResponse;
 import com.syc.finance.v1.bharat.mapper.MapperToUpdateResponse;
 import com.syc.finance.v1.bharat.notification.*;
@@ -20,7 +22,7 @@ import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIRequest;
 import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIResponse;
 import com.syc.finance.v1.bharat.entity.AccountInformation;
 import com.syc.finance.v1.bharat.entity.NetBankingInformation;
-import static com.syc.finance.v1.bharat.utils.AccountDetailsConstants.*;
+import static com.syc.finance.v1.bharat.constants.AccountDetailsConstants.*;
 import com.syc.finance.v1.bharat.entity.UpiInformation;
 import com.syc.finance.v1.bharat.exceptions.*;
 import com.syc.finance.v1.bharat.repository.TransactionHistoryRepository;
@@ -50,10 +52,8 @@ public class AccountServiceImpl implements AccountService {
     private UPIDetailsRepositories upiDetailsRepositories;
     @Autowired
     private TransactionService transactionService;
-
     @Autowired
     private AccountlLimitReached accountlLimitReached;
-
     @Autowired
     private NotificationsUtility notificationsUtility;
 
@@ -465,6 +465,27 @@ public class AccountServiceImpl implements AccountService {
         }
 
         throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
+    }
+
+    @Override
+    public UpdateAmountResponse updateAmountInPerson(UpdateAmountManually updateAmountManually) {
+
+        AccountInformation accountInformation = accountDetailsRepositories
+                .findByAccountNumber(updateAmountManually.getAccountNumber());
+
+        if (accountInformation != null) {
+            accountInformation.setAccountBalance(updateAmountManually.getAccountBalance());
+            accountDetailsRepositories.save(accountInformation);
+
+        } else {
+
+            throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
+
+        }
+
+        UpdateAmountResponse updateAmountResponse = new UpdateAmountResponse();
+        updateAmountResponse.setMessage("In person, an ATM has credited your account, adding a physical touch to your financial update.");
+        return updateAmountResponse;
     }
 }
 

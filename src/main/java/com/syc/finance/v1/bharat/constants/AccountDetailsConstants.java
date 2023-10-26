@@ -1,4 +1,4 @@
-package com.syc.finance.v1.bharat.utils;
+package com.syc.finance.v1.bharat.constants;
 import lombok.Data;
 
 @Data

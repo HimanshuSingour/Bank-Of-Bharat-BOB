@@ -5,7 +5,7 @@ import com.twilio.type.PhoneNumber;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static com.syc.finance.v1.bharat.utils.AccountDetailsConstants.TWILIO_PHONE_NUMBER;
+import static com.syc.finance.v1.bharat.constants.AccountDetailsConstants.TWILIO_PHONE_NUMBER;
 
 
 @Component

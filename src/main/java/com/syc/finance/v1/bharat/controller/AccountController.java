@@ -1,6 +1,8 @@
 package com.syc.finance.v1.bharat.controller;
 
 
+import com.syc.finance.v1.bharat.dto.Update.UpdateAmountManually;
+import com.syc.finance.v1.bharat.dto.Update.UpdateAmountResponse;
 import com.syc.finance.v1.bharat.utils.AccountDeletedSuccessResponse;
 import com.syc.finance.v1.bharat.dto.*;
 import com.syc.finance.v1.bharat.dto.Accounts.*;
@@ -96,5 +98,11 @@ public class AccountController {
     ResponseEntity<AddMoneyToUPIFromAccountResponse> payTo(@RequestBody AddMoneyToUPIFromAccountRequest addMoneyToUPIFromAccountRequest){
         AddMoneyToUPIFromAccountResponse response = userService.addingMoneyFromAccountNumberToUpi(addMoneyToUPIFromAccountRequest);
         return new ResponseEntity<AddMoneyToUPIFromAccountResponse>(response , HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/update/money")
+    ResponseEntity<UpdateAmountResponse> addMoneyInPerson(@RequestBody UpdateAmountManually updateAmountManually){
+        UpdateAmountResponse response = userService.updateAmountInPerson(updateAmountManually);
+        return new ResponseEntity<UpdateAmountResponse>(response , HttpStatus.ACCEPTED);
     }
 }

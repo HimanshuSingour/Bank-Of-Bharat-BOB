@@ -4,8 +4,6 @@ package com.syc.finance.v1.bharat.controller;
 import com.syc.finance.v1.bharat.dto.UPI.GetUPIRequest;
 import com.syc.finance.v1.bharat.dto.UPI.UPIRequest;
 import com.syc.finance.v1.bharat.dto.UPI.UPIResponse;
-import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountRequest;
-import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyToUPIFromAccountResponse;
 import com.syc.finance.v1.bharat.service.UpiAndNetBanking.UPIAndNetBankingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

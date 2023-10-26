@@ -1,4 +1,4 @@
-package com.syc.finance.v1.bharat.dto.TransferMoney;
+package com.syc.finance.v1.bharat.dto.Update;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransferMoneyResponse {
+public class UpdateAmountResponse {
 
-    private String responseMessage;
+    private String message;
 }
