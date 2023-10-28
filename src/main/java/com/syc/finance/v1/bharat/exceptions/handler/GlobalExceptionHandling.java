@@ -13,82 +13,81 @@ import static com.syc.finance.v1.bharat.utils.AccountDetailsForExceptionalHandle
 public class GlobalExceptionHandling {
 
     @ExceptionHandler(EmailAlreadyExistStep.class)
-    ResponseEntity<ErrorResponses> emailAlreadyExistException(EmailAlreadyExistStep ex){
+    ResponseEntity<ErrorResponses> emailAlreadyExistException(EmailAlreadyExistStep ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(PhoneNumberAlreadyExistStep.class)
-    ResponseEntity<ErrorResponses> phoneAlreadyExistException(PhoneNumberAlreadyExistStep ex){
+    ResponseEntity<ErrorResponses> phoneAlreadyExistException(PhoneNumberAlreadyExistStep ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(DailyLimitExceed.class)
-    ResponseEntity<ErrorResponses> phoneAlreadyExistException(DailyLimitExceed ex){
+    ResponseEntity<ErrorResponses> phoneAlreadyExistException(DailyLimitExceed ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(DetailsNotFountException.class)
-    ResponseEntity<ErrorResponses> detailsNotFoundException(DetailsNotFountException ex){
+    ResponseEntity<ErrorResponses> detailsNotFoundException(DetailsNotFountException ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(UpiNotFoundException.class)
-    ResponseEntity<ErrorResponses> upInotFound(UpiNotFoundException ex){
+    ResponseEntity<ErrorResponses> upInotFound(UpiNotFoundException ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
-
 
 
     @ExceptionHandler(NetBankingIdAlreadyExist.class)
-    ResponseEntity<ErrorResponses> netBankingIdAlreadyExistException(NetBankingIdAlreadyExist ex){
+    ResponseEntity<ErrorResponses> netBankingIdAlreadyExistException(NetBankingIdAlreadyExist ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(NotHavingNetbanking.class)
-    ResponseEntity<ErrorResponses> netBankingAccountNotPresent(NotHavingNetbanking ex){
+    ResponseEntity<ErrorResponses> netBankingAccountNotPresent(NotHavingNetbanking ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(InSufficientBalance.class)
-    ResponseEntity<ErrorResponses> inSufficientFunds(InSufficientBalance ex){
+    ResponseEntity<ErrorResponses> inSufficientFunds(InSufficientBalance ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
 
 
     @ExceptionHandler(UpiAlreadyExist.class)
-    ResponseEntity<ErrorResponses> upiAlreadyExist(UpiAlreadyExist ex){
+    ResponseEntity<ErrorResponses> upiAlreadyExist(UpiAlreadyExist ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(ApiException.class)
-    ResponseEntity<ApiException> apiExceptionHandling(ApiException ex){
+    ResponseEntity<ApiException> apiExceptionHandling(ApiException ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
@@ -96,19 +95,18 @@ public class GlobalExceptionHandling {
     }
 
     @ExceptionHandler(AccountBalanceMinimumSteps.class)
-    ResponseEntity<ErrorResponses> accountBalanceExist(AccountBalanceMinimumSteps ex){
+    ResponseEntity<ErrorResponses> accountBalanceExist(AccountBalanceMinimumSteps ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(AccountNotFoundStep.class)
-    ResponseEntity<ErrorResponses> accountNotFound(AccountNotFoundStep ex){
+    ResponseEntity<ErrorResponses> accountNotFound(AccountNotFoundStep ex) {
         ErrorResponses errorResponses = new ErrorResponses();
         errorResponses.setErrorMessage(ex.getMessage());
         errorResponses.setStatus(REJECTED);
-        return new ResponseEntity<>(errorResponses , HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(errorResponses, HttpStatus.FORBIDDEN);
     }
-
 }

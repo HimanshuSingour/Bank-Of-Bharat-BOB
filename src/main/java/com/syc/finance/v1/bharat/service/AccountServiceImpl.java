@@ -1,4 +1,5 @@
 package com.syc.finance.v1.bharat.service;
+
 import com.syc.finance.v1.bharat.dto.Update.UpdateAmountManually;
 import com.syc.finance.v1.bharat.dto.Update.UpdateAmountResponse;
 import com.syc.finance.v1.bharat.mapper.MapperToResponse;
@@ -22,7 +23,9 @@ import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIRequest;
 import com.syc.finance.v1.bharat.dto.UPIPay.AddMoneyFromAccountToUPIResponse;
 import com.syc.finance.v1.bharat.entity.AccountInformation;
 import com.syc.finance.v1.bharat.entity.NetBankingInformation;
+
 import static com.syc.finance.v1.bharat.constants.AccountDetailsConstants.*;
+
 import com.syc.finance.v1.bharat.entity.UpiInformation;
 import com.syc.finance.v1.bharat.exceptions.*;
 import com.syc.finance.v1.bharat.repository.TransactionHistoryRepository;
@@ -33,11 +36,11 @@ import com.twilio.Twilio;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
-
 
 
 @Service
@@ -58,14 +61,14 @@ public class AccountServiceImpl implements AccountService {
     private NotificationsUtility notificationsUtility;
 
 
-
-
     static {
         Twilio.init(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
     }
 
     @Override
     public UserResponse createAccount(UserRequest userRequest) {
+
+        log.info("Creating a new account.");
 
         String userIdGenerated = UUID.randomUUID().toString();
         MapperToResponse mapperToResponse = new MapperToResponse();
@@ -120,6 +123,8 @@ public class AccountServiceImpl implements AccountService {
 
             UserResponse userRes = mapperToResponse.userInformationToUserResponse(accountInformation);
             userRes.setMessage(BANK_VI_ACCOUNT_CREATED);
+
+            log.info("Account created successfully for user: {}", userRes.getAccountHolderName());
             return userRes;
 
         }
@@ -129,11 +134,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountUpdateDetailsResponse updateAccountDetails(AccountUpdatingDetailsRequest accountUpdatingDetailsRequest) {
 
+        log.info("Updating account details for account number: {}", accountUpdatingDetailsRequest.getAccountNumber());
+
         Optional<AccountInformation> userInformation = Optional.ofNullable(accountDetailsRepositories.findByAccountNumber(
                 accountUpdatingDetailsRequest.getAccountNumber()));
 
         if (userInformation.isPresent()) {
+            log.info("User information found for account number: {}", accountUpdatingDetailsRequest.getAccountNumber());
 
+            log.info("Updating account details for account holder: {}", accountUpdatingDetailsRequest.getAccountHolderName());
             AccountInformation updateAccountDetails = AccountInformation.builder()
                     .accountHolderName(accountUpdatingDetailsRequest.getAccountHolderName())
                     .contactPhone(accountUpdatingDetailsRequest.getContactPhone())
@@ -149,6 +158,9 @@ public class AccountServiceImpl implements AccountService {
                     .localDateTime(LocalDateTime.now())
                     .build();
 
+
+            log.info("Account details updated successfully for account holder: {}", accountUpdatingDetailsRequest.getAccountHolderName());
+
             notificationsUtility.sendForUpdateAccountDetails(accountUpdatingDetailsRequest.getAccountHolderName());
             accountDetailsRepositories.save(updateAccountDetails);
             MapperToUpdateResponse mapperToUpdateResponse = new MapperToUpdateResponse();
@@ -157,27 +169,34 @@ public class AccountServiceImpl implements AccountService {
 
         } else
 
-            throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
+            log.info("Account not found for account number: {}", accountUpdatingDetailsRequest.getAccountNumber());
+        throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
 
 
     @Override
     public AccountDeletedSuccessResponse deleteAccount(AccountDeleteAccountDetailsRequest accountDetailsRequest) {
+        log.info("Deleting account with account number: {}", accountDetailsRequest.getAccountNumber());
 
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(
                 accountDetailsRequest.getAccountNumber(),
                 accountDetailsRequest.getContactEmail(),
                 accountDetailsRequest.getPassword()
-
         );
 
         if (accountInformation != null) {
+            log.info("Account found for deletion: {}", accountInformation);
 
             accountDetailsRepositories.delete(accountInformation);
+            log.info("Account deleted for account number: {}", accountDetailsRequest.getAccountNumber());
+
             notificationsUtility.sendForDeletedAccount();
+            log.info("Account deletion notification sent");
 
             return new AccountDeletedSuccessResponse("Account deleted successfully.");
         } else {
+            log.info("Account not found for deletion. Account details: AccountNumber={}, ContactEmail={}, Password={}",
+                    accountDetailsRequest.getAccountNumber(), accountDetailsRequest.getContactEmail(), accountDetailsRequest.getPassword());
             throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
         }
     }
@@ -186,11 +205,14 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDetailsResponse getYourAccountDetails(String accountNumber, String IFSCCode, String password) {
 
+        log.info("Getting account details for accountNumber: {}", accountNumber);
+
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(accountNumber
                 , IFSCCode, password);
         AccountDetailsResponse accountDetailsResponse = new AccountDetailsResponse();
 
         if (accountInformation != null) {
+            log.info("Account details found for accountNumber: {}", accountNumber);
 
             accountDetailsResponse.setAccountId(accountInformation.getAccountId());
             accountDetailsResponse.setAccountHolderName(accountInformation.getAccountHolderName());
@@ -227,6 +249,8 @@ public class AccountServiceImpl implements AccountService {
 
             return accountDetailsResponse;
         } else {
+
+            log.info("Account not found for accountNumber: {}", accountNumber);
             throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
         }
     }
@@ -234,10 +258,12 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public CreditResponse creditYourMoney(CreditCredential creditCredential) {
 
+        log.info("Crediting money for account number: {}", creditCredential.getAccountNumber());
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(creditCredential.getAccountNumber(),
                 creditCredential.getIfscCode(), creditCredential.getPassword());
 
         if (accountInformation != null) {
+            log.info("Account found for crediting money. Account Number: {}", creditCredential.getAccountNumber());
 
             // transaction limit reached
             accountlLimitReached.validateDailyTransactionLimit(accountInformation);
@@ -272,14 +298,23 @@ public class AccountServiceImpl implements AccountService {
             addingMoney.setStatusMoney(BANK_VI_ACCOUNT_BALANCE_CREDIT);
             addingMoney.setLocalDateTime(LocalDateTime.now());
             addingMoney.setCurrentBalance(currentBalance);
+
+            log.info("Money credited successfully for account number: {}. Current balance: {}", creditCredential.getAccountNumber(), currentBalance);
             return addingMoney;
+
         } else
-            throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
+
+            log.info("Account not found for crediting money. Account details: AccountNumber={}, IFSCCode={}, Password={}",
+                    creditCredential.getAccountNumber(), creditCredential.getIfscCode(), creditCredential.getPassword());
+
+        throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
 
     }
 
     @Override
     public DebitedResponse debitYourMoney(DebitCredential debitCredential) {
+
+        log.info("Account found for debiting money. Account Number: {}", debitCredential.getAccountNumber());
 
         AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(
                 debitCredential.getAccountNumber(), debitCredential.getIfscCode(), debitCredential.getPassword());
@@ -290,8 +325,7 @@ public class AccountServiceImpl implements AccountService {
             accountlLimitReached.validateDailyTransactionLimit(accountInformation);
 
             if (debitedAmount >= 10000) {
-
-
+                log.info("High amount of money transfer. Account Balance: {}, Debited Amount: {}", accountInformation.getAccountBalance(), debitedAmount);
 
                 double currentBalance = accountInformation.getAccountBalance() - debitedAmount;
 
@@ -323,11 +357,13 @@ public class AccountServiceImpl implements AccountService {
                     miniMoney.setLocalDateTime(LocalDateTime.now());
                     miniMoney.setCurrentBalance(currentBalance);
                     miniMoney.setDebitYourMoney(debitedAmount);
+
+                    log.info("Money debited successfully for account number: {}. Current balance: {}", debitCredential.getAccountNumber(), currentBalance);
                     return miniMoney;
 
-                }
-                else {
+                } else {
 
+                    log.info("Insufficient balance to complete the transaction. Account Balance: {}, Debited Amount: {}", accountInformation.getAccountBalance(), debitedAmount);
                     throw new InSufficientBalance("Insufficient balance to complete the transaction.");
                 }
             } else {
@@ -362,10 +398,14 @@ public class AccountServiceImpl implements AccountService {
                     miniMoney.setCurrentBalance(currentBalance);
                     miniMoney.setDebitYourMoney(debitedAmount);
 
+                    log.info("Money debited successfully for account number: {}. Current balance: {}", debitCredential.getAccountNumber(), currentBalance);
                     return miniMoney;
                 }
             }
         }
+
+        log.info("Account not found for debiting money. Account details: AccountNumber={}, IFSCCode={}, Password={}",
+                debitCredential.getAccountNumber(), debitCredential.getIfscCode(), debitCredential.getPassword());
 
         throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
@@ -373,13 +413,21 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public BalanceEnquiryResponse balanceEnquiry(BalanceEnquireyRequest balanceEnquireyRequest) {
+        log.info("Received request for balance enquiry: {}", balanceEnquireyRequest);
 
-        AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(balanceEnquireyRequest.getAccountNumber(),
-                balanceEnquireyRequest.getIfscCode(), balanceEnquireyRequest.getPassword());
+        AccountInformation accountInformation = accountDetailsRepositories.findByAccountIdAndIfscCode(
+                balanceEnquireyRequest.getAccountNumber(),
+                balanceEnquireyRequest.getIfscCode(),
+                balanceEnquireyRequest.getPassword()
+        );
+
+        log.info("Account information found for the request.");
 
         NotificationsUtility notificationsUtility = new NotificationsUtility();
         notificationsUtility.sendForBalanceEnquiry(accountInformation.getAccountNumber(),
                 accountInformation.getAccountBalance(), accountInformation.getContactPhone());
+
+        log.info("Sent balance enquiry notification.");
 
         String balanceId = UUID.randomUUID().toString();
         BalanceEnquiryResponse response = new BalanceEnquiryResponse();
@@ -388,6 +436,9 @@ public class AccountServiceImpl implements AccountService {
         response.setStatusMessage(BANK_VI_ACCOUNT_BALANCE_STATUS);
         response.setYourBalance(accountInformation.getAccountBalance());
         response.setLocalDateTime(LocalDateTime.now());
+
+        log.info("Balance enquiry successful.");
+
         return response;
     }
 
@@ -395,41 +446,48 @@ public class AccountServiceImpl implements AccountService {
     // adding money from account balance to UPI, account -> UPI
     @Override
     public AddMoneyFromAccountToUPIResponse payUsingUpi(AddMoneyFromAccountToUPIRequest addMoneyFromAccountToUPIRequest) {
+        log.info("Received request to pay using UPI: {}", addMoneyFromAccountToUPIRequest);
 
-        AccountInformation accountInformation = accountDetailsRepositories
-                .findByAccountNumber(addMoneyFromAccountToUPIRequest.getAccountNumber());
-
+        AccountInformation accountInformation = accountDetailsRepositories.findByAccountNumber(addMoneyFromAccountToUPIRequest.getAccountNumber());
         UpiInformation upiInformation = upiDetailsRepositories.findByUpiId(addMoneyFromAccountToUPIRequest.getUpiId());
 
         if (upiInformation != null && accountInformation != null) {
+            log.info("UPI and account information found for the request.");
 
             accountlLimitReached.validateDailyTransactionLimit(accountInformation);
-            if (accountInformation.getAccountBalance() > addMoneyFromAccountToUPIRequest.getPayMoney()) {
+            log.info("Validated daily transaction limit for the account.");
 
-                double getFormUPI = addMoneyFromAccountToUPIRequest.getPayMoney();
+            if (accountInformation.getAccountBalance() > addMoneyFromAccountToUPIRequest.getPayMoney()) {
+                double getFromUPI = addMoneyFromAccountToUPIRequest.getPayMoney();
                 double fromMainAccount = accountInformation.getAccountBalance();
-                double leftMoneyForMainAccount = fromMainAccount - getFormUPI;
+                double leftMoneyForMainAccount = fromMainAccount - getFromUPI;
 
                 accountInformation.setAccountBalance(leftMoneyForMainAccount);
                 accountDetailsRepositories.save(accountInformation);
 
-                upiInformation.setUPI_BALANCE(getFormUPI);
+                upiInformation.setUPI_BALANCE(getFromUPI);
                 upiDetailsRepositories.save(upiInformation);
 
                 AddMoneyFromAccountToUPIResponse payUsingUpiResponse = new AddMoneyFromAccountToUPIResponse();
                 payUsingUpiResponse.setResponseMessage(SUCCESS_PAY_MONEY_FROM_UPI);
                 payUsingUpiResponse.setStatus(SUCCESS_STATUS);
+
+                log.info("Payment using UPI successful.");
+
                 return payUsingUpiResponse;
             } else {
-
+                log.error("Insufficient balance for the payment.");
                 throw new InSufficientBalance("Insufficient Balance..");
             }
+        } else {
+            log.error("UPI or account information not found for the request.");
+            throw new DetailsNotFountException("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
         }
-        throw new DetailsNotFountException("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
 
 
     public AddMoneyToUPIFromAccountResponse addingMoneyFromAccountNumberToUpi(AddMoneyToUPIFromAccountRequest addMoneyToUPIFromAccountRequest) {
+        log.info("Adding money from account number {} to UPI {}.", addMoneyToUPIFromAccountRequest.getAccountNumber(), addMoneyToUPIFromAccountRequest.getUpiId());
 
         AccountInformation accountInformation = accountDetailsRepositories
                 .findByAccountNumberAndPassword(
@@ -442,6 +500,7 @@ public class AccountServiceImpl implements AccountService {
 
 
             if (accountInformation != null && upiInformation != null) {
+                log.info("Account and UPI found for the transaction.");
 
                 accountlLimitReached.validateDailyTransactionLimit(accountInformation);
 
@@ -456,13 +515,21 @@ public class AccountServiceImpl implements AccountService {
 
                 AddMoneyToUPIFromAccountResponse addMoneyToUPIFromAccountResponse = new AddMoneyToUPIFromAccountResponse();
                 addMoneyToUPIFromAccountResponse.setStatus(SUCCESS_ADD_MONEY_TO_UPI_FROM_MAIN_ACCOUNT);
+
+                log.info("Money added successfully from account number {} to UPI {}.", addMoneyToUPIFromAccountRequest.getAccountNumber(), addMoneyToUPIFromAccountRequest.getUpiId());
+
                 return addMoneyToUPIFromAccountResponse;
             }
 
         } catch (NullPointerException e) {
 
+            log.warn("NullPointerException occurred: {}", e.getMessage());
+            log.warn("There is no records...");
+
             System.out.println("There is no records...");
         }
+
+        log.info("Account or UPI not found for the transaction. AccountNumber={}, UPIId={}", addMoneyToUPIFromAccountRequest.getAccountNumber(), addMoneyToUPIFromAccountRequest.getUpiId());
 
         throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
     }
@@ -470,17 +537,24 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public UpdateAmountResponse updateAmountInPerson(UpdateAmountManually updateAmountManually) {
 
+        log.info("Updating amount in person for account number: {}", updateAmountManually.getAccountNumber());
+
         AccountInformation accountInformation = accountDetailsRepositories
                 .findByAccountNumber(updateAmountManually.getAccountNumber());
 
         if (accountInformation != null) {
+
+            log.info("Account found for updating amount in person. Account Number: {}", updateAmountManually.getAccountNumber());
             accountInformation.setAccountBalance(updateAmountManually.getAccountBalance());
             accountDetailsRepositories.save(accountInformation);
 
+            log.info("Account balance updated in person. New balance: {}", updateAmountManually.getAccountBalance());
         } else {
 
-            throw new AccountNotFoundStep("The details you have entered are incorrect. There is no account with these details. Please double-check the information and try again.");
+            log.info("Account not found for updating amount in person. Account Number: {}", updateAmountManually.getAccountNumber());
 
+            throw new AccountNotFoundStep("The details you have entered are incorrect. " +
+                    "There is no account with these details. Please double-check the information and try again.");
         }
 
         UpdateAmountResponse updateAmountResponse = new UpdateAmountResponse();
