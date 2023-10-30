@@ -5,9 +5,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/BHARAT_BANK_USER_INFO
+    url: jdbc:mysql://root:CgDHgA5AC-fD1Ah4aBhagbe142b4-GEa@roundhouse.proxy.rlwy.net:15150/railway
     username: root
-    password: Ryzen@12
+    password: CgDHgA5AC-fD1Ah4aBhagbe142b4-GEa
     driver-class-name : com.mysql.cj.jdbc.Driver
 
   main:
