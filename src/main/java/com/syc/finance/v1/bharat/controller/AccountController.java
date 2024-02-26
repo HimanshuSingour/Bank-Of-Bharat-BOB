@@ -54,6 +54,7 @@ public class AccountController {
         return new ResponseEntity<AccountUpdateDetailsResponse>(accountUpdateDetailsResponse, HttpStatus.CREATED);
     }
 
+    //localhost:9090/finance/v1/bank/v4/bharat/delete-account
     @DeleteMapping("/delete-account")
     ResponseEntity<AccountDeletedSuccessResponse> deleteAccount(@RequestBody AccountDeleteAccountDetailsRequest accountDetailsRequest){
         AccountDeletedSuccessResponse accountDeletedSuccessResponse = userService.deleteAccount(accountDetailsRequest);
